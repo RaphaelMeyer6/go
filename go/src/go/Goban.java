@@ -4,6 +4,10 @@
  */
 package go;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -18,114 +22,52 @@ public class Goban {
 
     /**
      * Constructeur par defaut
-     *
      * @param height
-     * @param width
+     * @param width 
      */
-    public Goban(int height, int width) {
-        this.height = height;
-        this.width = width;
+    public Goban(int height, int width){
+        this.height=height;
+        this.width=width;
         listePierres = new Pierre[height][width];
     }
-
-    /**
-     * Constructeur de copie de liste de pierres
-     *
-     * @param height
-     * @param width
-     * @param listePierres
-     */
     public Goban(int height, int width, Pierre[][] listePierres) {
         this.height = height;
         this.width = width;
         this.listePierres = listePierres;
     }
 
-    /**
-     * Constructeur de copie
-     *
-     * @param goban
-     */
-    public Goban(Goban goban) {
-        this.height = goban.getHeight();
-        this.width = goban.getWidth();
-        this.listePierres = goban.getListePierres();
-    }
-
-    /**
-     * Getter de la liste de pierres
-     *
-     * @return
-     */
     public Pierre[][] getListePierres() {
         return listePierres;
     }
 
-    /**
-     * setter de la liste de pierre
-     *
-     * @param listePierres
-     */
     public void setListePierres(Pierre[][] listePierres) {
         this.listePierres = listePierres;
     }
 
-    /**
-     * getter de la hauteur
-     *
-     * @return
-     */
     public int getHeight() {
         return height;
     }
 
-    /**
-     * getter de la largeur
-     *
-     * @return
-     */
     public int getWidth() {
         return width;
     }
 
-    /**
-     * setter de la hauteur
-     *
-     * @param height
-     */
     public void setHeight(int height) {
         this.height = height;
     }
 
-    /**
-     * setter de la largeur
-     *
-     * @param width
-     */
     public void setWidth(int width) {
         this.width = width;
     }
 
-    /**
-     * Renvois true si l'intersection specifie est libre
-     *
-     * @param p
-     * @return
-     */
     public boolean intersectionLibre(Point2D p) {
         boolean estLibre = true;
-        if (listePierres[p.getX()][p.getY()] != null) {
+        if (listePierres[p.getX()][p.getY()]!=null){
             estLibre = false;
         }
         return estLibre;
     }
 
-    /**
-     * renvois true si la position passee est dans le plateau
-     *
-     * @param p
-     * @return
-     */
     public boolean horsPlateau(Point2D p) {
         if ((p.getX() < 0) || (p.getX() >= width) || (p.getY() < 0) || (p.getY() >= height)) {
             return false;
@@ -133,26 +75,21 @@ public class Goban {
         return true;
     }
 
-    /**
-     * Renvois le nombre de liberte d'une pierre
-     *
-     * @param pi
-     * @return
-     */
     public int nombreLibertes(Pierre pi) {
         int lib = 4;
         ArrayList<Point2D> listeAdjacents = new ArrayList<>();
-        Point2D nord = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() + 1);
-        Point2D sud = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() - 1);
-        Point2D est = new Point2D(pi.getPosition().getX() + 1, pi.getPosition().getY());
-        Point2D ouest = new Point2D(pi.getPosition().getX() - 1, pi.getPosition().getY());
+        Point2D nord = new Point2D (pi.getPosition().getX(), pi.getPosition().getY()+1);
+        Point2D sud = new Point2D (pi.getPosition().getX(), pi.getPosition().getY()-1);
+        Point2D est = new Point2D (pi.getPosition().getX()+1, pi.getPosition().getY());
+        Point2D ouest = new Point2D (pi.getPosition().getX()-1, pi.getPosition().getY());
         listeAdjacents.add(nord);
         listeAdjacents.add(sud);
         listeAdjacents.add(est);
         listeAdjacents.add(ouest);
-
+        
         for (Point2D p : listeAdjacents) {
-            if (horsPlateau(p) || !intersectionLibre(p)) {
+            if (horsPlateau(p) || !intersectionLibre(p))
+            {
                 lib--;
             }
         }
@@ -160,7 +97,7 @@ public class Goban {
 
         return lib;
     }
-
+    
     public ArrayList<Pierre> aVoisin(Pierre pi) {
         ArrayList<Point2D> listeAdjacents = new ArrayList<>();
         ArrayList<Pierre> listeVoisins = new ArrayList<>();
@@ -172,7 +109,7 @@ public class Goban {
         listeAdjacents.add(sud);
         listeAdjacents.add(est);
         listeAdjacents.add(ouest);
-
+        
         for (Point2D p : listeAdjacents) {
             if (!intersectionLibre(p) && pi.sameColor(listePierres[p.getX()][p.getY()])) {
                 listeVoisins.add(listePierres[p.getX()][p.getY()]);
@@ -180,23 +117,58 @@ public class Goban {
         }
         return listeVoisins;
     }
-
-    public void ajouterGroupe(Pierre pi) {
+            
+    
+    public void ajouterGroupe (Pierre pi){
+        
     }
     
-    
-
-    public void poserPierre(Point2D p, boolean blanc) {
+  public void poserPierre(Point2D p, boolean blanc) {
         Pierre pierre = new Pierre(blanc, p);
         this.listePierres[p.getX()][p.getY()] = pierre;
         
         if (aVoisin(pierre).isEmpty()){
             ArrayList<Pierre> listeUnePierre = new ArrayList<>();
             listeUnePierre.add(pierre);
-            pierre.groupe = new Groupe(listeUnePierre);
+            pierre.setGroupe(new Groupe(listeUnePierre));
         }
         else for (Pierre pi : aVoisin(pierre)){
-            pierre.groupe.fusionnerGroupes(pi.groupe);
+            pierre.getGroupe().fusionnerGroupes(pi.getGroupe());
         }
+    }
+  
+    public void enregistrer(String fileName){
+        
+        BufferedWriter bw=null;
+         try{
+            bw = new BufferedWriter(new FileWriter(fileName));
+            for(int j=0;j<this.getHeight();j++){   
+                for(int i=0;i<this.getWidth();i++){
+                  if (listePierres[i][j]==null){
+                      bw.write("X ");
+                  }
+                  else if (listePierres[i][j].isBlanc()){
+                      bw.write("B ");
+                  }
+                  else {
+                      bw.write("N ");
+                  }
+                }
+                bw.newLine();
+            }
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }finally{
+            if(bw!=null){
+                try{
+                    bw.close();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        
     }
 }
