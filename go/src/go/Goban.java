@@ -19,6 +19,8 @@ public class Goban {
     private int height;
     private int width;
     private Pierre[][] listePierres;
+    private int blanchesCapturees;
+    private int noiresCapturees;
 
     /**
      * Constructeur par defaut
@@ -30,12 +32,16 @@ public class Goban {
         this.height = height;
         this.width = width;
         listePierres = new Pierre[height][width];
+        this.blanchesCapturees=0;
+        this.noiresCapturees=0;
     }
 
     public Goban(int height, int width, Pierre[][] listePierres) {
         this.height = height;
         this.width = width;
         this.listePierres = listePierres;
+        this.blanchesCapturees=0;
+        this.noiresCapturees=0;
     }
 
     public Pierre[][] getListePierres() {
@@ -48,6 +54,22 @@ public class Goban {
 
     public int getHeight() {
         return height;
+    }
+
+    public int getBlanchesCapturees() {
+        return blanchesCapturees;
+    }
+
+    public void setBlanchesCapturees(int blanchesCapturees) {
+        this.blanchesCapturees = blanchesCapturees;
+    }
+
+    public int getNoiresCapturees() {
+        return noiresCapturees;
+    }
+
+    public void setNoiresCapturees(int noiresCapturees) {
+        this.noiresCapturees = noiresCapturees;
     }
 
     public int getWidth() {
@@ -147,7 +169,7 @@ public class Goban {
 
     public void ajouterGroupe(Pierre pi) {
     }
-
+    
     public void poserPierre(Point2D p, boolean blanc) {
         Pierre pierre = new Pierre(blanc, p);
         this.listePierres[p.getX()][p.getY()] = pierre;
@@ -156,10 +178,51 @@ public class Goban {
             ArrayList<Pierre> listeUnePierre = new ArrayList<>();
             listeUnePierre.add(pierre);
             pierre.setGroupe(new Groupe(listeUnePierre));
-        } else {
-            for (Pierre pi : voisins(pierre, pierre.isBlanc())) {
-                pierre.getGroupe().fusionnerGroupes(pi.getGroupe());
+        }
+        else for (Pierre pi : voisins(pierre,pierre.isBlanc())){
+            pierre.getGroupe().fusionnerGroupes(pi.getGroupe());
+        }
+    }
+    
+     /**
+     * Capture des groupes adverses 
+     * 
+     * @param p
+     * @return 
+     */
+    public boolean capture(Pierre p){
+        
+        boolean adversairesCaptures = false;
+        ArrayList<Pierre> voisinsAdverses = new ArrayList<>();
+        voisinsAdverses = voisins(p,!p.isBlanc());
+        if(voisinsAdverses.size()!=0){
+            for(Pierre voisinAdverse : voisinsAdverses){
+                if(this.nombreLibertes(voisinAdverse.getGroupe())==0)
+                {
+                    this.captureGroupe(voisinAdverse.getGroupe());
+                    adversairesCaptures = true;
+                }
             }
+        }
+        return adversairesCaptures;
+    }
+    
+    /**
+     * Capture du groupe avec modification des compteurs de pierres capturees
+     * @param g 
+     */
+    public void captureGroupe(Groupe g){
+        
+        ArrayList<Pierre> pierres = g.getPierres();
+        if(pierres.get(0).isBlanc()){
+            this.blanchesCapturees = this.blanchesCapturees + pierres.size();
+        }
+        else{
+            this.noiresCapturees = this.noiresCapturees+ pierres.size();
+        }
+        for(Pierre p : g.getPierres()){
+            this.listePierres[p.getPosition().getX()][p.getPosition().getY()]
+                    = null;
         }
     }
 
@@ -216,4 +279,5 @@ public class Goban {
         return ret;
 
     }
+
 }
