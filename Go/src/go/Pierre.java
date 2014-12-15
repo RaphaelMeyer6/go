@@ -43,5 +43,13 @@ public class Pierre {
    public Point2D getPosition(){
        return this.position;
    }
+   /**
+    * Return true if the stones have the same color
+    * @param p
+    * @return 
+    */
+   public boolean sameColor(Pierre p){
+       return this.isBlanc() == p.isBlanc();
+   }
            
 }
