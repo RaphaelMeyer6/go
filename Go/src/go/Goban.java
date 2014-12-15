@@ -16,6 +16,16 @@ public class Goban {
     private int width;
     private Pierre[][] listePierres;
 
+    /**
+     * Constructeur par defaut
+     * @param height
+     * @param width 
+     */
+    public Goban(int height, int width){
+        this.height=height;
+        this.width=width;
+        listePierres = new Pierre[height][width];
+    }
     public Goban(int height, int width, Pierre[][] listePierres) {
         this.height = height;
         this.width = width;
