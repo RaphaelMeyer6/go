@@ -66,7 +66,13 @@ public class Joueur {
     
     
 
-
-
+    public boolean jouer(Goban plateau){
+        boolean aJoue=false;
+        
+        //TODO
+        
+        return aJoue;
+    }
+    
     
 }
