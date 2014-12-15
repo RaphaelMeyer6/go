@@ -4,6 +4,12 @@
  */
 package go;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -138,4 +144,40 @@ public class Goban {
 
         return lib;
     }
+    
+    public void enregistrer(String fileName){
+        
+        BufferedWriter bw=null;
+         try{
+            bw = new BufferedWriter(new FileWriter(fileName));
+            for(int j=0;j<this.getHeight();j++){   
+                for(int i=0;i<this.getWidth();i++){
+                  if (listePierres[i][j]==null){
+                      bw.write("X ");
+                  }
+                  else if (listePierres[i][j].isBlanc()){
+                      bw.write("B ");
+                  }
+                  else {
+                      bw.write("N ");
+                  }
+                }
+                bw.newLine();
+            }
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }finally{
+            if(bw!=null){
+                try{
+                    bw.close();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        
+    }
+    
 }
