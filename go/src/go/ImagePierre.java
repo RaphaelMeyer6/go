@@ -5,6 +5,9 @@
  */
 package go;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -18,33 +21,27 @@ import javax.swing.JPanel;
  */
 public class ImagePierre extends JPanel{
     
-    private BufferedImage image;
     private Pierre pierre;
+    private int width,height;
     
     public ImagePierre(Pierre pierre, int width, int height){
         this.pierre=pierre;
-        this.setSize(width, height);
+        this.width=width;
+        this.height=height;
+        this.setBackground(null);
+        this.setBounds((width/2)+width*(pierre.getPosition().getX()-1), (height/2)+height*(pierre.getPosition().getY()-1), width, height);
         
     }
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(pierre!=null){
-            String imgName="";
-            if(pierre.isBlanc()){
-                imgName="white.png";
-            }else{
-                imgName="black.png";
-            }
-            try{
-                image = ImageIO.read(new File(imgName+".png"));
-            }catch (IOException e){ 
-                e.printStackTrace();
-            } 
+        if(pierre.isBlanc()){
+            g.setColor(Color.WHITE);
         }else{
-            image=null;
-	}
-        g.drawImage(image, 0, 0, null);
+            g.setColor(Color.BLACK);
+        }
+        
+        g.fillOval(0, 0, width, height);
         
     }
 }

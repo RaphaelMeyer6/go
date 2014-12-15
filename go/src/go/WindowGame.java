@@ -5,24 +5,34 @@
  */
 package go;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+
 
 /**
+ * Class that defines the GUI
  * @author Akatosh
  */
 public class WindowGame extends JFrame{
     private Goban plateau;
     private ContentWindowGame content;
     
+    /**
+     * Constructor of the window with size
+     * @param width the window width
+     * @param height the window height
+     */
     public WindowGame(int width, int height){
         this.setTitle("Jeu de GO");
         this.setSize(width, height);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setResizable(false);
     }
+    /**
+     * Constructor of the window with size and Goban
+     * @param width the window width
+     * @param height the window height
+     * @param plateau the Goban
+     */
     public WindowGame(int width, int height, Goban plateau){
         this(width,height);
         this.plateau=plateau;

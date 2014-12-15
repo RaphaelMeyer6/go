@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author avinesse
  */
 public class Groupe {
-    
+
     private ArrayList<Pierre> pierres;
 
     /**
@@ -48,5 +48,6 @@ public class Groupe {
             this.getPierres().add(p);          
         }
     }
+
     
 }
