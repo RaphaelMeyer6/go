@@ -26,6 +26,8 @@ public class Groupe {
         this.pierres = pierres;
     }
     
-    
+    public void fusionnerGroupes (Groupe g){
+        
+    }
     
 }
