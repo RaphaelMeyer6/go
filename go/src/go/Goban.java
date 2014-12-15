@@ -98,7 +98,13 @@ public class Goban {
         return lib;
     }
     
-    public ArrayList<Pierre> aVoisin(Pierre pi) {
+    /**
+     * Return a list of neighbours of the asked color 
+     * @param pi
+     * @param blanc
+     * @return 
+     */
+    public ArrayList<Pierre> voisins(Pierre pi, boolean blanc) {
         ArrayList<Point2D> listeAdjacents = new ArrayList<>();
         ArrayList<Pierre> listeVoisins = new ArrayList<>();
         Point2D nord = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() + 1);
@@ -111,7 +117,8 @@ public class Goban {
         listeAdjacents.add(ouest);
         
         for (Point2D p : listeAdjacents) {
-            if (!intersectionLibre(p) && pi.sameColor(listePierres[p.getX()][p.getY()])) {
+            if (!intersectionLibre(p) && 
+                    listePierres[p.getX()][p.getY()].isBlanc()==blanc ) {
                 listeVoisins.add(listePierres[p.getX()][p.getY()]);
             }
         }
@@ -127,12 +134,12 @@ public class Goban {
         Pierre pierre = new Pierre(blanc, p);
         this.listePierres[p.getX()][p.getY()] = pierre;
         
-        if (aVoisin(pierre).isEmpty()){
+        if (voisins(pierre,pierre.isBlanc()).isEmpty()){
             ArrayList<Pierre> listeUnePierre = new ArrayList<>();
             listeUnePierre.add(pierre);
             pierre.setGroupe(new Groupe(listeUnePierre));
         }
-        else for (Pierre pi : aVoisin(pierre)){
+        else for (Pierre pi : voisins(pierre,pierre.isBlanc())){
             pierre.getGroupe().fusionnerGroupes(pi.getGroupe());
         }
     }
