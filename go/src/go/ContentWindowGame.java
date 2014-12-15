@@ -10,7 +10,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 /**
- *
+ * Class that defines the Goban content
  * @author Akatosh
  */
 public class ContentWindowGame extends JPanel{
@@ -18,6 +18,12 @@ public class ContentWindowGame extends JPanel{
     private Goban plateau;
     private int cellWidth, cellHeight;
     
+    /**
+     * Constructor of the content with size and the Goban
+     * @param width the content width
+     * @param height the content height
+     * @param plateau the Goban
+     */
     public ContentWindowGame(int width, int height, Goban plateau){
         this.plateau=plateau;
         this.setSize(width,height);
@@ -25,6 +31,10 @@ public class ContentWindowGame extends JPanel{
         this.setLayout(null);
         
     }
+    /**
+     * Paint the lines and the background of the Goban
+     * @param g graphic object for override
+     */
     @Override
     public void paintComponent (Graphics g){
         super.paintComponent(g);
@@ -36,7 +46,13 @@ public class ContentWindowGame extends JPanel{
             g.drawLine(0,i*cellHeight,this.getWidth(),i*cellHeight);
         }
         
-	
-        
+        for(int i=0;i<plateau.getListePierres().length;i++){
+            for(int j=0;j<plateau.getListePierres().length;j++){
+                if(plateau.getListePierres()[i][j]!=null){
+                    ImagePierre stone = new ImagePierre(plateau.getListePierres()[i][j],(int)(cellWidth),(int)(cellHeight));
+                    this.add(stone);
+                }
+            }
+        }
     }
 }

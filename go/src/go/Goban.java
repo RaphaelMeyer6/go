@@ -75,22 +75,25 @@ public class Goban {
         return true;
     }
 
-    public int nombreLibertes(Pierre pi) {
-        int lib = 4;
-        ArrayList<Point2D> listeAdjacents = new ArrayList<>();
-        Point2D nord = new Point2D (pi.getPosition().getX(), pi.getPosition().getY()+1);
-        Point2D sud = new Point2D (pi.getPosition().getX(), pi.getPosition().getY()-1);
-        Point2D est = new Point2D (pi.getPosition().getX()+1, pi.getPosition().getY());
-        Point2D ouest = new Point2D (pi.getPosition().getX()-1, pi.getPosition().getY());
-        listeAdjacents.add(nord);
-        listeAdjacents.add(sud);
-        listeAdjacents.add(est);
-        listeAdjacents.add(ouest);
-        
-        for (Point2D p : listeAdjacents) {
-            if (horsPlateau(p) || !intersectionLibre(p))
-            {
-                lib--;
+    public int nombreLibertes(Groupe g) {
+        int lib = 0;
+        ArrayList<Point2D> listeLibertes = new ArrayList<>();
+        for (Pierre pi : g.getPierres()) {
+            ArrayList<Point2D> listeAdjacents = new ArrayList<>();
+            Point2D nord = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() + 1);
+            Point2D sud = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() - 1);
+            Point2D est = new Point2D(pi.getPosition().getX() + 1, pi.getPosition().getY());
+            Point2D ouest = new Point2D(pi.getPosition().getX() - 1, pi.getPosition().getY());
+            listeAdjacents.add(nord);
+            listeAdjacents.add(sud);
+            listeAdjacents.add(est);
+            listeAdjacents.add(ouest);
+
+            for (Point2D p : listeAdjacents) {
+                if (!horsPlateau(p) && intersectionLibre(p) && !listeLibertes.contains(p)) {
+                    listeLibertes.add(p);
+                    lib++;
+                }
             }
         }
 
@@ -98,7 +101,13 @@ public class Goban {
         return lib;
     }
     
-    public ArrayList<Pierre> aVoisin(Pierre pi) {
+    /**
+     * Return a list of neighbours of the asked color 
+     * @param pi
+     * @param blanc
+     * @return 
+     */
+    public ArrayList<Pierre> voisins(Pierre pi, boolean blanc) {
         ArrayList<Point2D> listeAdjacents = new ArrayList<>();
         ArrayList<Pierre> listeVoisins = new ArrayList<>();
         Point2D nord = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() + 1);
@@ -111,7 +120,8 @@ public class Goban {
         listeAdjacents.add(ouest);
         
         for (Point2D p : listeAdjacents) {
-            if (!intersectionLibre(p) && pi.sameColor(listePierres[p.getX()][p.getY()])) {
+            if (!intersectionLibre(p) && 
+                    listePierres[p.getX()][p.getY()].isBlanc()==blanc ) {
                 listeVoisins.add(listePierres[p.getX()][p.getY()]);
             }
         }
@@ -127,12 +137,12 @@ public class Goban {
         Pierre pierre = new Pierre(blanc, p);
         this.listePierres[p.getX()][p.getY()] = pierre;
         
-        if (aVoisin(pierre).isEmpty()){
+        if (voisins(pierre,pierre.isBlanc()).isEmpty()){
             ArrayList<Pierre> listeUnePierre = new ArrayList<>();
             listeUnePierre.add(pierre);
             pierre.setGroupe(new Groupe(listeUnePierre));
         }
-        else for (Pierre pi : aVoisin(pierre)){
+        else for (Pierre pi : voisins(pierre,pierre.isBlanc())){
             pierre.getGroupe().fusionnerGroupes(pi.getGroupe());
         }
     }
