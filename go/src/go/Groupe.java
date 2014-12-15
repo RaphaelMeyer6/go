@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author avinesse
  */
 public class Groupe {
-    
+
     private ArrayList<Pierre> pierres;
 
     public Groupe(ArrayList<Pierre> pierres) {
@@ -25,9 +25,9 @@ public class Groupe {
     public void setPierres(ArrayList<Pierre> pierres) {
         this.pierres = pierres;
     }
-    
-    public void fusionnerGroupes (Groupe g){
-        
+
+    public void fusionnerGroupes(Groupe g) {
     }
+
     
 }
