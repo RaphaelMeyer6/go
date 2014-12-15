@@ -16,39 +16,19 @@ import javax.swing.JPanel;
  */
 public class WindowGame extends JFrame{
     private Goban plateau;
-    private JPanel content;
-    private int cell_width;
-    private int cell_height;
-
+    private ContentWindowGame content;
+    
     public WindowGame(int width, int height){
+        this.setTitle("Jeu de GO");
         this.setSize(width, height);
-        this.content=new JPanel();
-        this.content.setBackground(Color.WHITE);
-        this.content.setLayout(null);
-        this.setSize(width, height);
-        this.setContentPane(content);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
     }
     public WindowGame(int width, int height, Goban plateau){
         this(width,height);
         this.plateau=plateau;
-        cell_width=(int)((double)this.getWidth()/(double)plateau.getWidth());
-        cell_height=(int)((double)this.getHeight()/(double)plateau.getHeight());
-        System.out.println(cell_width);
-        for(int i=0;i<plateau.getWidth();i++){
-            for(int j=0;j<plateau.getHeight();j++){
-                JPanel cell = new JPanel();
-                cell.setBounds(i*cell_width,j*cell_height,cell_width, cell_height);
-                cell.setBackground(new Color(245,172,99));
-                cell.setBorder(BorderFactory.createLineBorder(Color.black));
-                this.content.add(cell);
-            }
-        }
-        repaint();
-        
+        this.content=new ContentWindowGame(width,height,plateau);
+        this.setContentPane(content);
     }
-    
 
     public Goban getPlateau() {
         return plateau;
@@ -56,6 +36,8 @@ public class WindowGame extends JFrame{
 
     public void setPlateau(Goban plateau) {
         this.plateau = plateau;
+        this.content=new ContentWindowGame(this.getWidth(),this.getHeight(),plateau);
+        this.setContentPane(content);
     }
     
 }
