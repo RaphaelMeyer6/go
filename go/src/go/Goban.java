@@ -66,10 +66,10 @@ public class Goban {
     public int nombreLibertes(Pierre pi) {
         int lib = 4;
         ArrayList<Point2D> listeAdjacents = new ArrayList<>();
-        Point2D nord = new Point2D (pi.position.getX(), pi.position.getY()+1);
-        Point2D sud = new Point2D (pi.position.getX(), pi.position.getY()-1);
-        Point2D est = new Point2D (pi.position.getX()+1, pi.position.getY());
-        Point2D ouest = new Point2D (pi.position.getX()-1, pi.position.getY());
+        Point2D nord = new Point2D (pi.getPosition().getX(), pi.getPosition().getY()+1);
+        Point2D sud = new Point2D (pi.getPosition().getX(), pi.getPosition().getY()-1);
+        Point2D est = new Point2D (pi.getPosition().getX()+1, pi.getPosition().getY());
+        Point2D ouest = new Point2D (pi.getPosition().getX()-1, pi.getPosition().getY());
         listeAdjacents.add(nord);
         listeAdjacents.add(sud);
         listeAdjacents.add(est);
