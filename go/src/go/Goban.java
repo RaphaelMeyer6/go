@@ -85,4 +85,36 @@ public class Goban {
 
         return lib;
     }
+    
+    public boolean aVoisin (Pierre pi) {
+        ArrayList<Point2D> listeAdjacents = new ArrayList<>();
+        Point2D nord = new Point2D (pi.getPosition().getX(), pi.getPosition().getY()+1);
+        Point2D sud = new Point2D (pi.getPosition().getX(), pi.getPosition().getY()-1);
+        Point2D est = new Point2D (pi.getPosition().getX()+1, pi.getPosition().getY());
+        Point2D ouest = new Point2D (pi.getPosition().getX()-1, pi.getPosition().getY());
+        listeAdjacents.add(nord);
+        listeAdjacents.add(sud);
+        listeAdjacents.add(est);
+        listeAdjacents.add(ouest);
+        
+        for (Point2D p : listeAdjacents) {
+            if (!intersectionLibre(p) && pi.sameColor())
+            {
+                return true ;
+            }
+        }
+         return false
+    }
+            
+    
+    public void ajouterGroupe (Pierre pi){
+        
+    }
+    
+    public void poserPierre (Point2D p, boolean blanc) {
+        Pierre pierre = new Pierre (blanc, p);
+        this.listePierres.add(pierre);
+    }
+    
+    
 }
