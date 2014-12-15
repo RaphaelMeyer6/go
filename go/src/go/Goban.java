@@ -130,10 +130,10 @@ public class Goban {
         if (aVoisin(pierre).isEmpty()){
             ArrayList<Pierre> listeUnePierre = new ArrayList<>();
             listeUnePierre.add(pierre);
-            pierre.groupe = new Groupe(listeUnePierre);
+            pierre.setGroupe(new Groupe(listeUnePierre));
         }
         else for (Pierre pi : aVoisin(pierre)){
-            pierre.groupe.fusionnerGroupes(pi.groupe);
+            pierre.getGroupe().fusionnerGroupes(pi.getGroupe());
         }
     }
   
