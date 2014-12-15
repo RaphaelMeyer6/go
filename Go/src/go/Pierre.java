@@ -6,8 +6,8 @@ package go;
  */
 public class Pierre {
     
-   boolean blanc;
-   Point2D position;
+   private boolean blanc;
+   private Point2D position;
    
    /**
     * Constructeur par défaut
