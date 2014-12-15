@@ -180,7 +180,7 @@ public class Goban {
         boolean adversairesCaptures = false;
         ArrayList<Pierre> voisinsAdverses = new ArrayList<>();
         voisinsAdverses = voisins(p,!p.isBlanc());
-        if(voisinsAdverses.size()!=0){
+        if(!voisinsAdverses.isEmpty()){
             for(Pierre voisinAdverse : voisinsAdverses){
                 if(this.nombreLibertes(voisinAdverse.getGroupe())==0)
                 {
