@@ -14,19 +14,29 @@ public class Goban {
 
     private int height;
     private int width;
-    private ArrayList<Pierre> listePierres;
+    private Pierre[][] listePierres;
 
-    public Goban(int height, int width, ArrayList<Pierre> listePierres) {
+    /**
+     * Constructeur par defaut
+     * @param height
+     * @param width 
+     */
+    public Goban(int height, int width){
+        this.height=height;
+        this.width=width;
+        listePierres = new Pierre[height][width];
+    }
+    public Goban(int height, int width, Pierre[][] listePierres) {
         this.height = height;
         this.width = width;
         this.listePierres = listePierres;
     }
 
-    public ArrayList<Pierre> getListePierres() {
+    public Pierre[][] getListePierres() {
         return listePierres;
     }
 
-    public void setListePierres(ArrayList<Pierre> listePierres) {
+    public void setListePierres(Pierre[][] listePierres) {
         this.listePierres = listePierres;
     }
 
@@ -48,10 +58,8 @@ public class Goban {
 
     public boolean intersectionLibre(Point2D p) {
         boolean estLibre = true;
-        for (Pierre pi : listePierres) {
-            if (pi.getPosition().equals(p)) {
-                return false;
-            }
+        if (listePierres[p.getX()][p.getY()]!=null){
+            estLibre = false;
         }
         return estLibre;
     }
@@ -98,12 +106,12 @@ public class Goban {
         listeAdjacents.add(ouest);
         
         for (Point2D p : listeAdjacents) {
-            if (!intersectionLibre(p) && pi.sameColor())
+            if (!intersectionLibre(p) && pi.sameColor(listePierres[p.getX()][p.getY()]))
             {
                 return true ;
             }
         }
-         return false
+         return false;
     }
             
     
@@ -113,8 +121,6 @@ public class Goban {
     
     public void poserPierre (Point2D p, boolean blanc) {
         Pierre pierre = new Pierre (blanc, p);
-        this.listePierres.add(pierre);
+        this.listePierres[p.getX()][p.getY()] = pierre;
     }
-    
-    
 }
