@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Pierre.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;go&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">go</a> &gt; <span class="el_source">Pierre.java</span></div><h1>Pierre.java</h1><pre class="source lang-java linenums">package go;
+
+/**
+ *
+ * @author alexis
+ */
+public class Pierre {
+    
+   private boolean blanc;
+   private Point2D position;
+   private Groupe groupe;
+   
+   /**
+    * Constructeur par défaut
+    * @param blanc
+    * @param position 
+    */
+<span class="nc" id="L18">   public Pierre(boolean blanc, Point2D position){</span>
+<span class="nc" id="L19">       this.blanc=blanc;</span>
+<span class="nc" id="L20">       this.position=new Point2D(position);</span>
+<span class="nc" id="L21">       this.groupe=null;</span>
+<span class="nc" id="L22">   }</span>
+   
+      /**
+    * Constructeur avec groupe
+    * @param blanc
+    * @param position 
+    * @param group
+    */
+<span class="nc" id="L30">   public Pierre(boolean blanc, Point2D position, Groupe group){</span>
+<span class="nc" id="L31">       this.blanc=blanc;</span>
+<span class="nc" id="L32">       this.position=new Point2D(position);</span>
+<span class="nc" id="L33">       this.groupe=group;</span>
+<span class="nc" id="L34">   }</span>
+   
+   /**
+    * Constructeur pour une position x,y
+    * @param blanc
+    * @param x
+    * @param y 
+    */
+<span class="nc" id="L42">   public Pierre(boolean blanc,int x,int y){</span>
+<span class="nc" id="L43">       this.blanc=blanc;</span>
+<span class="nc" id="L44">       this.position= new Point2D(x,y);</span>
+<span class="nc" id="L45">       this.groupe=null;</span>
+<span class="nc" id="L46">   }</span>
+      /**
+    * Constructeur pour une position x,y
+    * @param blanc
+    * @param x
+    * @param y 
+    * @param group
+    */
+<span class="nc" id="L54">   public Pierre(boolean blanc,int x,int y,Groupe group){</span>
+<span class="nc" id="L55">       this.blanc=blanc;</span>
+<span class="nc" id="L56">       this.position= new Point2D(x,y);</span>
+<span class="nc" id="L57">       this.groupe=group;</span>
+<span class="nc" id="L58">   }</span>
+   
+   
+   
+   /**
+    * Return true if white
+    * @return 
+    */
+   public boolean isBlanc(){
+<span class="nc" id="L67">       return this.blanc;</span>
+   }
+   /**
+    * Return the position
+    * @return 
+    */
+   public Point2D getPosition(){
+<span class="nc" id="L74">       return this.position;</span>
+   }
+   /**
+    * Return true if the stones have the same color
+    * @param p
+    * @return 
+    */
+   public boolean sameColor(Pierre p){
+<span class="nc bnc" id="L82" title="All 2 branches missed.">       return this.isBlanc() == p.isBlanc();</span>
+   }
+
+   /**
+    * 
+    * @return 
+    */
+    public Groupe getGroupe() {
+<span class="nc" id="L90">        return groupe;</span>
+    }
+
+    /**
+     * 
+     * @param groupe 
+     */
+    public void setGroupe(Groupe groupe) {
+<span class="nc" id="L98">        this.groupe = groupe;</span>
+<span class="nc" id="L99">    }</span>
+           
+   
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

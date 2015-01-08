@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Jeu.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;go&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">go</a> &gt; <span class="el_source">Jeu.java</span></div><h1>Jeu.java</h1><pre class="source lang-java linenums">package go;
+
+/**
+ *
+ * @author alexis
+ */
+public class Jeu {
+    
+    Joueur j1;
+    Joueur j2;
+    Goban plateau;
+    int tour;
+    int passesJ1;
+    int passesJ2;
+    
+    /**
+     * Constructeur de base
+     */
+<span class="nc" id="L19">    public Jeu(Goban plateau){</span>
+<span class="nc" id="L20">        j1 = new Joueur(false);</span>
+<span class="nc" id="L21">        j2 = new Joueur(true);</span>
+<span class="nc" id="L22">        this.plateau=plateau;</span>
+<span class="nc" id="L23">        this.tour = 1;</span>
+<span class="nc" id="L24">    }</span>
+    /**
+     * Constructeur comprennant 2 joueurs
+     * @param j1
+     * @param j2 
+     */
+<span class="nc" id="L30">    public Jeu(Goban plateau, Joueur j1, Joueur j2){</span>
+<span class="nc" id="L31">        this.j1 = j1;</span>
+<span class="nc" id="L32">        this.j2 = j2;</span>
+<span class="nc" id="L33">        this.plateau=plateau;</span>
+<span class="nc" id="L34">        this.tour = 1;</span>
+<span class="nc" id="L35">    }</span>
+    /**
+     * Permet de lancer une partie
+     */
+    public void jouer(){
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        while (!finPartie()){</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">            if(j1.jouer(plateau)){  //Si le joueur joue on réinitialise le nombre</span>
+<span class="nc" id="L42">                passesJ1=0;         //De tours pasés</span>
+            }
+            else {
+<span class="nc" id="L45">                passesJ1++;         //Sinon on incremente</span>
+            }
+<span class="nc bnc" id="L47" title="All 2 branches missed.">            if(j2.jouer(plateau)){</span>
+<span class="nc" id="L48">                passesJ2=0;</span>
+            }
+            else{
+<span class="nc" id="L51">                passesJ2++;</span>
+            }
+        }
+<span class="nc" id="L54">    }</span>
+    
+    /**
+     * Renvois true si les deux joueurs on passés au moins 2 tours chacun d'afilé
+     * @return 
+     */
+    public boolean finPartie(){
+<span class="nc bnc" id="L61" title="All 4 branches missed.">        return ((passesJ1&gt;=2)&amp;&amp;(passesJ2&gt;=2));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

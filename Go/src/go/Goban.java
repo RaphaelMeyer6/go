@@ -95,24 +95,15 @@ public class Goban {
     }
 
     public boolean horsPlateau(Point2D p) {
-        if ((p.getX() < 0) || (p.getX() >= width) || (p.getY() < 0) || (p.getY() >= height)) {
-            return true;
-        }
-        return false;
+        return (p.getX() < 0) || (p.getX() >= width) || (p.getY() < 0) || (p.getY() >= height);
     }
 
     public boolean bordPlateau(Point2D p) {
-        if ((p.getX() == 0) || (p.getX() == width - 1) || (p.getY() == 0) || (p.getY() == height - 1)) {
-            return true;
-        }
-        return false;
+        return (p.getX() == 0) || (p.getX() == width - 1) || (p.getY() == 0) || (p.getY() == height - 1);
     }
 
     public boolean coinPlateau(Point2D p) {
-        if ((p.getX() == 0) && ((p.getY() == 0) || (p.getY() == height - 1)) || (p.getX() == width - 1) && ((p.getY() == 0) || (p.getY() == height - 1))) {
-            return true;
-        }
-        return false;
+        return ((p.getX() == 0) && ((p.getY() == 0) || (p.getY() == height - 1))) || ((p.getX() == width - 1) && ((p.getY() == 0) || (p.getY() == height - 1)));
     }
 
     public int nombreLibertes(Groupe g) {
