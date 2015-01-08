@@ -152,58 +152,13 @@ public class GobanTest {
     @Test
     public void testNombreLibertes() {
         System.out.println("nombreLibertes");
-        Point2D p = new Point2D(0,0);
-        Point2D p1 = new Point2D(0,1);
-        Point2D p2 = new Point2D(1,1);
-        Point2D p3 = new Point2D(1,0);
-        Point2D p4 = new Point2D(4,4);
-        Point2D p5 = new Point2D(2,2);
-        Goban instance = new Goban(5,5);
-        ArrayList<Pierre> listPG1 = new ArrayList();
-        ArrayList<Pierre> listPG2 = new ArrayList();
-        ArrayList<Pierre> listPG3 = new ArrayList();
-        ArrayList<Pierre> listPG4 = new ArrayList();
-        Pierre[][] listePierres = new Pierre[5][5];
-        Pierre pi = new Pierre(true,p);
-        Pierre pi1 = new Pierre (true,p1);
-        Pierre pi2 = new Pierre(false,p2);
-        Pierre pi3 = new Pierre (false,p3);
-        Pierre pi4 = new Pierre (false,p4);
-        Pierre pi5 = new Pierre (false,p5);
-        listPG1.add(pi);
-        listPG1.add(pi1);
-        listPG2.add(pi2);
-        listPG2.add(pi3);
-        listPG3.add(pi4);
-        listPG4.add(pi5);
-        Groupe g1 = new Groupe(listPG1);
-        Groupe g2 = new Groupe(listPG2);       
-        Groupe g3 = new Groupe(listPG3);
-        Groupe g4 = new Groupe(listPG4); 
-        listePierres[0][0] = pi;
-        listePierres[0][1] = pi1;
-        listePierres[1][1] = pi2;
-        listePierres[1][0] = pi3;
-        listePierres[4][4] = pi4;
-        listePierres[2][2] = pi5;
-        instance.setListePierres(listePierres);
-        
-        
-        int expResult = 1;
-        int result = instance.nombreLibertes(g1);
+        Groupe g = null;
+        Goban instance = null;
+        int expResult = 0;
+        int result = instance.nombreLibertes(g);
         assertEquals(expResult, result);
-        
-        expResult = 3;
-        result = instance.nombreLibertes(g2);
-        assertEquals(expResult, result);
-        
-        expResult = 2;
-        result = instance.nombreLibertes(g3);
-        assertEquals(expResult, result);
-        
-        expResult = 4;
-        result = instance.nombreLibertes(g4);
-        assertEquals(expResult, result);        
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
@@ -296,13 +251,58 @@ public class GobanTest {
     @Test
     public void testSeSuicide() {
         System.out.println("seSuicide");
-        Pierre pi = null;
-        Goban instance = null;
+        //Test d'une pierre placée dans un angle et entourée de pièces noires
+        Point2D p1=new Point2D(0,0);
+        Point2D p2=new Point2D(0,1);
+        Point2D p3=new Point2D(1,0);
+        Pierre pi1 = new Pierre(false,p1);
+        Pierre[][] pierres=new Pierre[10][10];
+        Goban instance = new Goban(10,10,pierres);
+        instance.poserPierre(p2, false);
+        instance.poserPierre(p3, true);
         boolean expResult = false;
-        boolean result = instance.seSuicide(pi);
+        boolean result = instance.seSuicide(pi1);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //Test d'une pierre placée dans un angle et entourée d'au moins une pièce blanche
+        p1=new Point2D(0,0);
+        p2=new Point2D(0,1);
+        p3=new Point2D(1,0);
+        pi1 = new Pierre(false,p1);
+        pierres=new Pierre[10][10];
+        instance = new Goban(10,10,pierres);
+        instance.poserPierre(p2, true);
+        instance.poserPierre(p3, true);
+        expResult = true;
+        result = instance.seSuicide(pi1);
+        assertEquals(expResult, result);
+        //Test d'une pierre placée sur un bord et entourée de pièces noires
+        p1=new Point2D(0,0);
+        p2=new Point2D(1,0);
+        p3=new Point2D(2,0);
+        Point2D p4=new Point2D(1,1);
+        pi1 = new Pierre(false,p2);
+        pierres=new Pierre[10][10];
+        instance = new Goban(10,10,pierres);
+        instance.poserPierre(p1, true);
+        instance.poserPierre(p3, true);
+        instance.poserPierre(p4, true);
+        expResult = true;
+        result = instance.seSuicide(pi1);
+        assertEquals(expResult, result);
+        //Test d'une pierre placée sur un bord et entourée d'une pièce blanche au moins
+        p1=new Point2D(0,0);
+        p2=new Point2D(1,0);
+        p3=new Point2D(2,0);
+        p4=new Point2D(1,1);
+        pi1 = new Pierre(false,p2);
+        pierres=new Pierre[10][10];
+        instance = new Goban(10,10,pierres);
+        instance.poserPierre(p1, false);
+        instance.poserPierre(p3, true);
+        instance.poserPierre(p4, true);
+        expResult = false;
+        result = instance.seSuicide(pi1);
+        assertEquals(expResult, result);
     }
     
 }
