@@ -6,15 +6,15 @@ package go;
  */
 public class Jeu {
     
-    Joueur j1;
-    Joueur j2;
-    Goban plateau;
-    int tour;
-    int passesJ1;
-    int passesJ2;
-    boolean partieFinie = false;
-    boolean joueurJoue = false;
-    Point2D action;
+    private Joueur j1;
+    private Joueur j2;
+    private Goban plateau;
+    private int tour;
+    private int passesJ1;
+    private int passesJ2;
+    private boolean partieFinie = false;
+    private boolean joueurJoue = false;
+    private Point2D action;
     
     
     /**
@@ -49,18 +49,15 @@ public class Jeu {
         if (joueur){
             if ( action.getX()==-1 && action.getY()==-1){
             passesJ1++;
-            }
-            else {
+            }else {
                 Pierre pierre = new Pierre(joueur,point);
-                plateau.ajouterGroupe(pierre);
+                plateau.poserPierre(pierre.getPosition(),pierre.isBlanc());
                 passesJ1=0;
             }
-        }
-        else{
+        }else{
             if ( action.getX()==-1 && action.getY()==-1){
             passesJ2++;
-            }
-            else {
+            }else {
                 Pierre pierre = new Pierre(joueur,point);
                 plateau.ajouterGroupe(pierre);
                 passesJ2=0;
@@ -74,7 +71,7 @@ public class Jeu {
      * @return 
      */
     public boolean finPartie(){
-        return ((passesJ1>=2)&&(passesJ2>=2));
+        return (passesJ1>=2)&&(passesJ2>=2);
     }
     
     /**
@@ -84,6 +81,13 @@ public class Jeu {
      */
     public boolean getJoueurJoue(){
         return this.joueurJoue;
+    }
+    /**
+     * Renvoie le plateau de jeu
+     * @return le goban
+     */
+    public Goban getPlateau(){
+        return this.plateau;
     }
     
 }
