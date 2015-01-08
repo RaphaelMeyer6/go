@@ -38,7 +38,10 @@ public class Jeu {
         this.tour = 1;
     }
     /**
-     * Permet de jouer un coup
+     * Permet de jouer un coup. si le point envoyé est [-1;-1] le joueur passe
+     * son tour
+     * @param point
+     * @param joueur 
      */
     public void jouer(Point2D point, boolean joueur){
         this.action=point;
