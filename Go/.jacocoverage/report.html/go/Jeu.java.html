@@ -12,53 +12,79 @@ public class Jeu {
     int tour;
     int passesJ1;
     int passesJ2;
+<span class="pc" id="L15">    boolean partieFinie = false;</span>
+<span class="pc" id="L16">    boolean joueurJoue = false;</span>
+    Point2D action;
+    
     
     /**
      * Constructeur de base
      */
-<span class="nc" id="L19">    public Jeu(Goban plateau){</span>
-<span class="nc" id="L20">        j1 = new Joueur(false);</span>
-<span class="nc" id="L21">        j2 = new Joueur(true);</span>
-<span class="nc" id="L22">        this.plateau=plateau;</span>
-<span class="nc" id="L23">        this.tour = 1;</span>
-<span class="nc" id="L24">    }</span>
+<span class="nc" id="L23">    public Jeu(Goban plateau){</span>
+<span class="nc" id="L24">        j1 = new Joueur(false);</span>
+<span class="nc" id="L25">        j2 = new Joueur(true);</span>
+<span class="nc" id="L26">        this.plateau=plateau;</span>
+<span class="nc" id="L27">        this.tour = 1;</span>
+<span class="nc" id="L28">    }</span>
     /**
      * Constructeur comprennant 2 joueurs
      * @param j1
      * @param j2 
      */
-<span class="nc" id="L30">    public Jeu(Goban plateau, Joueur j1, Joueur j2){</span>
-<span class="nc" id="L31">        this.j1 = j1;</span>
-<span class="nc" id="L32">        this.j2 = j2;</span>
-<span class="nc" id="L33">        this.plateau=plateau;</span>
-<span class="nc" id="L34">        this.tour = 1;</span>
-<span class="nc" id="L35">    }</span>
+<span class="fc" id="L34">    public Jeu(Goban plateau, Joueur j1, Joueur j2){</span>
+<span class="fc" id="L35">        this.j1 = j1;</span>
+<span class="fc" id="L36">        this.j2 = j2;</span>
+<span class="fc" id="L37">        this.plateau=plateau;</span>
+<span class="fc" id="L38">        this.tour = 1;</span>
+<span class="fc" id="L39">    }</span>
     /**
-     * Permet de lancer une partie
+     * Permet de jouer un coup. si le point envoyé est [-1;-1] le joueur passe
+     * son tour
+     * @param point
+     * @param joueur 
      */
-    public void jouer(){
-<span class="nc bnc" id="L40" title="All 2 branches missed.">        while (!finPartie()){</span>
-<span class="nc bnc" id="L41" title="All 2 branches missed.">            if(j1.jouer(plateau)){  //Si le joueur joue on réinitialise le nombre</span>
-<span class="nc" id="L42">                passesJ1=0;         //De tours pasés</span>
+    public void jouer(Point2D point, boolean joueur){
+<span class="fc" id="L47">        this.action=point;</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        this.joueurJoue = !joueur;</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        if (joueur){</span>
+<span class="nc bnc" id="L50" title="All 4 branches missed.">            if ( action.getX()==-1 &amp;&amp; action.getY()==-1){</span>
+<span class="nc" id="L51">            passesJ1++;</span>
             }
             else {
-<span class="nc" id="L45">                passesJ1++;         //Sinon on incremente</span>
+<span class="nc" id="L54">                Pierre pierre = new Pierre(joueur,point);</span>
+<span class="nc" id="L55">                plateau.poserPierre(pierre.getPosition(),pierre.isBlanc());</span>
+<span class="nc" id="L56">                passesJ1=0;</span>
+<span class="nc" id="L57">            }</span>
+        }
+        else{
+<span class="pc bpc" id="L60" title="3 of 4 branches missed.">            if ( action.getX()==-1 &amp;&amp; action.getY()==-1){</span>
+<span class="nc" id="L61">            passesJ2++;</span>
             }
-<span class="nc bnc" id="L47" title="All 2 branches missed.">            if(j2.jouer(plateau)){</span>
-<span class="nc" id="L48">                passesJ2=0;</span>
-            }
-            else{
-<span class="nc" id="L51">                passesJ2++;</span>
+            else {
+<span class="fc" id="L64">                Pierre pierre = new Pierre(joueur,point);</span>
+<span class="fc" id="L65">                plateau.ajouterGroupe(pierre);</span>
+<span class="fc" id="L66">                passesJ2=0;</span>
             }
         }
-<span class="nc" id="L54">    }</span>
+<span class="fc" id="L69">        partieFinie=finPartie();</span>
+<span class="fc" id="L70">    }</span>
     
     /**
      * Renvois true si les deux joueurs on passés au moins 2 tours chacun d'afilé
      * @return 
      */
     public boolean finPartie(){
-<span class="nc bnc" id="L61" title="All 4 branches missed.">        return ((passesJ1&gt;=2)&amp;&amp;(passesJ2&gt;=2));</span>
+<span class="fc bfc" id="L77" title="All 4 branches covered.">        return ((passesJ1&gt;=2)&amp;&amp;(passesJ2&gt;=2));</span>
     }
+    
+    /**
+     * Renvois true si c'est le tour du joueur 2
+     * et false si c'est le tour du joueur 1
+     * @return 
+     */
+    public boolean getJoueurJoue(){
+<span class="nc" id="L86">        return this.joueurJoue;</span>
+    }
+    
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>
