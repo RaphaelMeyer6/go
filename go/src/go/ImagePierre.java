@@ -5,17 +5,13 @@
  */
 package go;
 
-import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Composite;
 import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
@@ -27,6 +23,7 @@ public class ImagePierre extends JPanel{
     private Pierre pierre;
     private int width,height;
     private int x,y;
+    private boolean isHover;
     
     /**
      * Constructor of the position
@@ -36,25 +33,24 @@ public class ImagePierre extends JPanel{
      */
     public ImagePierre(int x, int y, Pierre pierre, int width, int height){
         this.pierre=pierre;
-        this.width=width;
-        this.height=height;
-        this.x=x;
-        this.y=y;
-        
-        this.setBackground(new Color(0,0,0,0));
+        setNewBounds(x,y,width,height);
+        this.isHover=false;
+        this.setOpaque(false);
         
         addMouseListener(new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("Position"+x+","+y);
-            }
+            public void mouseClicked(MouseEvent e) {}
             @Override
             public void mouseEntered(MouseEvent e) {
                 setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                isHover=true;
+                repaint();
             }
             @Override
             public void mouseExited(MouseEvent e) {
                 setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                isHover=false;
+                repaint();
             }
             @Override
             public void mousePressed(MouseEvent e) {}
@@ -63,7 +59,7 @@ public class ImagePierre extends JPanel{
         });	
     }
     /**
-     * Paint the stone in black or white or do nothing if stone is null
+     * Paint the stone in black or white or do nothing if stone is set to null
      * @param g graphic object for override
      */
     @Override
@@ -75,16 +71,24 @@ public class ImagePierre extends JPanel{
             }else{
                 g.setColor(Color.BLACK);
             }
-
-            g.fillOval((width-(int)(width*0.8))/2, (height-(int)(height*0.8))/2, (int)(width*0.8), (int)(height*0.8));
+            g.fillOval((int)(width-width*0.9)/2, (int)(height-height*0.9)/2, (int)(width*0.9), (int)(height*0.9));
+        }else if(isHover){
+            g.setColor(new Color(255,255,255,120));
+            g.fillOval((int)(width-width*0.9)/2, (int)(height-height*0.9)/2, (int)(width*0.9), (int)(height*0.9));
         }
         
     }
     public void setPierre(Pierre pierre){
         this.pierre=pierre;
-        repaint();
     }
     public Pierre getPierre(){
         return this.pierre;
+    }
+    public void setNewBounds(int x, int y,int width, int height){
+        this.width=width;
+        this.height=height;
+        this.x=x;
+        this.y=y;
+        this.setBounds(this.x,this.y, this.width, this.height);
     }
 }

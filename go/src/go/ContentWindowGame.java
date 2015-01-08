@@ -31,14 +31,10 @@ public class ContentWindowGame extends JPanel{
         this.setSize(width,height);
         this.setBackground(new Color(245,172,99));
         this.setLayout(null);
-        cellWidth=(int)((double)this.getWidth()/((double)plateau.getWidth()+1));
-        cellHeight=(int)((double)this.getHeight()/((double)plateau.getHeight()+1));
-        for(int i=0;i<plateau.getListePierres().length;i++){
-            for(int j=0;j<plateau.getListePierres().length;j++){
-                ImagePierre stone = new ImagePierre(i,j,plateau.getListePierres()[i][j],(int)((double)cellWidth/1.2),(int)((double)cellHeight/1.2));
-                stone.setBounds(cellWidth/2+cellWidth*i, cellHeight/2+cellHeight*j, (int)((double)cellWidth/1.3), (int)((double)cellHeight/1.3));
-                listPositions[i][j]=stone;
-                this.add(stone);
+        for(int i=0;i<this.plateau.getWidth();i++){
+            for(int j=0;j<this.plateau.getHeight();j++){
+                listPositions[i][j]=new ImagePierre(0,0,plateau.getListePierres()[i][j],0,0);
+                this.add(listPositions[i][j]);
             }
         }
     }
@@ -58,10 +54,8 @@ public class ContentWindowGame extends JPanel{
         }
         for(int i=0;i<plateau.getListePierres().length;i++){
             for(int j=0;j<plateau.getListePierres().length;j++){
-                listPositions[i][j].setBounds(cellWidth/2+cellWidth*i+(cellWidth-(int)((double)cellWidth/1.2))/2, cellHeight/2+cellHeight*j+(cellHeight-(int)((double)cellHeight/1.2))/2, (int)((double)cellWidth/1.2), (int)((double)cellHeight/1.2));
-                if(plateau.getListePierres()[i][j]!=null){
-                    listPositions[i][j].setPierre(plateau.getListePierres()[i][j]);
-                }
+                listPositions[i][j].setNewBounds(cellWidth/2+cellWidth*i+(cellWidth-(int)((double)cellWidth/1.2))/2, cellHeight/2+cellHeight*j+(cellHeight-(int)((double)cellHeight/1.2))/2, (int)((double)cellWidth/1.2), (int)((double)cellHeight/1.2));
+                listPositions[i][j].setPierre(plateau.getListePierres()[i][j]);
             }
         }
     }

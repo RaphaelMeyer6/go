@@ -167,14 +167,32 @@ public class GobanTest {
     @Test
     public void testVoisins() {
         System.out.println("voisins");
-        Pierre pi = null;
-        boolean blanc = false;
-        Goban instance = null;
-        ArrayList<Pierre> expResult = null;
-        ArrayList<Pierre> result = instance.voisins(pi, blanc);
+        Point2D p = new Point2D(0,0);
+        Point2D p1 = new Point2D(0,1);
+        Point2D p2 = new Point2D(1,1);
+        Point2D p3 = new Point2D(1,0);
+        Point2D p5 = new Point2D(2,2);
+        Goban instance = new Goban(5,5);
+        Pierre[][] listePierres = new Pierre[5][5];
+        Pierre pi = new Pierre(true,p);
+        Pierre pi1 = new Pierre (true,p1);
+        Pierre pi2 = new Pierre(false,p2);
+        Pierre pi3 = new Pierre (false,p3);
+        Pierre pi5 = new Pierre (false,p5);
+        listePierres[0][0] = pi;
+        listePierres[0][1] = pi1;
+        listePierres[1][1] = pi2;
+        listePierres[1][0] = pi3;
+        listePierres[2][2] = pi5;
+        instance.setListePierres(listePierres);
+        
+        
+        
+        ArrayList<Pierre> expResult = new ArrayList();
+        expResult.add(pi1);
+        ArrayList<Pierre> result = instance.voisins(pi1, true);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
