@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  */
 public class ContentWindowGame extends JPanel{
     
-    private Goban plateau;
+    private Jeu game;
     private int cellWidth, cellHeight;
     private ImagePierre[][] listPositions;
     
@@ -25,15 +25,15 @@ public class ContentWindowGame extends JPanel{
      * @param height the content height
      * @param plateau the Goban
      */
-    public ContentWindowGame(int width, int height, Goban plateau){
-        this.plateau=plateau;
-        this.listPositions=new ImagePierre[this.plateau.getWidth()][this.plateau.getHeight()];
+    public ContentWindowGame(int width, int height, Jeu game){
+        this.game=game;
+        this.listPositions=new ImagePierre[this.game.getPlateau().getWidth()][this.game.getPlateau().getHeight()];
         this.setSize(width,height);
         this.setBackground(new Color(245,172,99));
         this.setLayout(null);
-        for(int i=0;i<this.plateau.getWidth();i++){
-            for(int j=0;j<this.plateau.getHeight();j++){
-                listPositions[i][j]=new ImagePierre(0,0,plateau.getListePierres()[i][j],0,0);
+        for(int i=0;i<this.game.getPlateau().getWidth();i++){
+            for(int j=0;j<this.game.getPlateau().getHeight();j++){
+                listPositions[i][j]=new ImagePierre(0,0,game.getPlateau().getListePierres()[i][j],0,0,this.game,new Point2D(i,j));
                 this.add(listPositions[i][j]);
             }
         }
@@ -45,17 +45,17 @@ public class ContentWindowGame extends JPanel{
     @Override
     public void paintComponent (Graphics g){
         super.paintComponent(g);
-        cellWidth=(int)((double)this.getWidth()/((double)plateau.getWidth()+1));
-        cellHeight=(int)((double)this.getHeight()/((double)plateau.getHeight()+1));
-        for(int i=1;i<plateau.getWidth()+1;i++){
+        cellWidth=(int)((double)this.getWidth()/((double)game.getPlateau().getWidth()+1));
+        cellHeight=(int)((double)this.getHeight()/((double)game.getPlateau().getHeight()+1));
+        for(int i=1;i<game.getPlateau().getWidth()+1;i++){
             g.setColor(Color.BLACK);
-            g.drawLine(i*cellWidth,cellHeight,i*cellWidth,plateau.getHeight()*cellHeight);
-            g.drawLine(cellWidth,i*cellHeight,plateau.getWidth()*cellWidth,i*cellHeight);
+            g.drawLine(i*cellWidth,cellHeight,i*cellWidth,game.getPlateau().getHeight()*cellHeight);
+            g.drawLine(cellWidth,i*cellHeight,game.getPlateau().getWidth()*cellWidth,i*cellHeight);
         }
-        for(int i=0;i<plateau.getListePierres().length;i++){
-            for(int j=0;j<plateau.getListePierres().length;j++){
+        for(int i=0;i<game.getPlateau().getListePierres().length;i++){
+            for(int j=0;j<game.getPlateau().getListePierres().length;j++){
                 listPositions[i][j].setNewBounds(cellWidth/2+cellWidth*i+(cellWidth-(int)((double)cellWidth/1.2))/2, cellHeight/2+cellHeight*j+(cellHeight-(int)((double)cellHeight/1.2))/2, (int)((double)cellWidth/1.2), (int)((double)cellHeight/1.2));
-                listPositions[i][j].setPierre(plateau.getListePierres()[i][j]);
+                listPositions[i][j].setPierre(game.getPlateau().getListePierres()[i][j]);
             }
         }
     }

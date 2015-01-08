@@ -13,7 +13,7 @@ import javax.swing.JFrame;
  * @author Akatosh
  */
 public class WindowGame extends JFrame{
-    private Goban plateau;
+    private Jeu game;
     private ContentWindowGame content;
     
     /**
@@ -28,25 +28,25 @@ public class WindowGame extends JFrame{
         this.setResizable(false);
     }
     /**
-     * Constructor of the window with size and Goban
+     * Constructor of the window with size and game
      * @param width the window width
      * @param height the window height
-     * @param plateau the Goban
+     * @param game the game
      */
-    public WindowGame(int width, int height, Goban plateau){
+    public WindowGame(int width, int height, Jeu game){
         this(width,height);
-        this.plateau=plateau;
-        this.content=new ContentWindowGame(width,height,plateau);
+        this.game=game;
+        this.content=new ContentWindowGame(width,height,game);
         this.setContentPane(content);
     }
 
-    public Goban getPlateau() {
-        return plateau;
+    public Jeu getGame() {
+        return game;
     }
 
-    public void setPlateau(Goban plateau) {
-        this.plateau = plateau;
-        this.content=new ContentWindowGame(this.getWidth(),this.getHeight(),plateau);
+    public void setGame(Jeu game) {
+        this.game = game;
+        this.content=new ContentWindowGame(this.getWidth(),this.getHeight(),game);
         this.setContentPane(content);
     }
     

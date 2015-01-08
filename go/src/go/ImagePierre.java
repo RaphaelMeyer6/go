@@ -23,7 +23,9 @@ public class ImagePierre extends JPanel{
     private Pierre pierre;
     private int width,height;
     private int x,y;
+    private Point2D position;
     private boolean isHover;
+    private Jeu game;
     
     /**
      * Constructor of the position
@@ -31,15 +33,21 @@ public class ImagePierre extends JPanel{
      * @param width the width of the image
      * @param height the height of the image
      */
-    public ImagePierre(int x, int y, Pierre pierre, int width, int height){
+    public ImagePierre(int x, int y, Pierre pierre, int width, int height, Jeu game, Point2D position){
         this.pierre=pierre;
+        this.game=game;
+        this.position=position;
         setNewBounds(x,y,width,height);
         this.isHover=false;
         this.setOpaque(false);
         
         addMouseListener(new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {}
+            public void mouseClicked(MouseEvent e) {
+                if(pierre!=null){
+                    game.jouer(position, game.getJoueurJoue());
+                }
+            }
             @Override
             public void mouseEntered(MouseEvent e) {
                 setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -73,7 +81,11 @@ public class ImagePierre extends JPanel{
             }
             g.fillOval((int)(width-width*0.9)/2, (int)(height-height*0.9)/2, (int)(width*0.9), (int)(height*0.9));
         }else if(isHover){
-            g.setColor(new Color(255,255,255,120));
+            if(game.getJoueurJoue()){
+                g.setColor(new Color(255,255,255,120));
+            }else{
+                g.setColor(new Color(0,0,0,120));
+            }
             g.fillOval((int)(width-width*0.9)/2, (int)(height-height*0.9)/2, (int)(width*0.9), (int)(height*0.9));
         }
         
