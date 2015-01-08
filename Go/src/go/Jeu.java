@@ -51,6 +51,8 @@ public class Jeu {
             passesJ1++;
             }
             else {
+                Pierre pierre = new Pierre(joueur,point);
+                plateau.ajouterGroupe(pierre);
                 passesJ1=0;
             }
         }
@@ -59,6 +61,8 @@ public class Jeu {
             passesJ2++;
             }
             else {
+                Pierre pierre = new Pierre(joueur,point);
+                plateau.ajouterGroupe(pierre);
                 passesJ2=0;
             }
         }
