@@ -49,18 +49,15 @@ public class Jeu {
         if (joueur){
             if ( action.getX()==-1 && action.getY()==-1){
             passesJ1++;
-            }
-            else {
+            }else {
                 Pierre pierre = new Pierre(joueur,point);
-                plateau.ajouterGroupe(pierre);
+                plateau.poserPierre(pierre.getPosition(),pierre.isBlanc());
                 passesJ1=0;
             }
-        }
-        else{
+        }else{
             if ( action.getX()==-1 && action.getY()==-1){
             passesJ2++;
-            }
-            else {
+            }else {
                 Pierre pierre = new Pierre(joueur,point);
                 plateau.ajouterGroupe(pierre);
                 passesJ2=0;
@@ -74,7 +71,7 @@ public class Jeu {
      * @return 
      */
     public boolean finPartie(){
-        return ((passesJ1>=2)&&(passesJ2>=2));
+        return (passesJ1>=2)&&(passesJ2>=2);
     }
     
     /**
