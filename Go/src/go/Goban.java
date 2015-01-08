@@ -162,7 +162,8 @@ public class Goban {
 
         for (Point2D p : listeAdjacents) {
             if (!intersectionLibre(p)
-                    && listePierres[p.getX()][p.getY()].isBlanc() == blanc) {
+                    && listePierres[p.getX()][p.getY()].isBlanc() == blanc
+                    && !horsPlateau(p)) {
                 listeVoisins.add(listePierres[p.getX()][p.getY()]);
             }
         }
