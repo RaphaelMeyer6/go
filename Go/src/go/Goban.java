@@ -95,24 +95,15 @@ public class Goban {
     }
 
     public boolean horsPlateau(Point2D p) {
-        if ((p.getX() < 0) || (p.getX() >= width) || (p.getY() < 0) || (p.getY() >= height)) {
-            return true;
-        }
-        return false;
+        return (p.getX() < 0) || (p.getX() >= width) || (p.getY() < 0) || (p.getY() >= height);
     }
 
     public boolean bordPlateau(Point2D p) {
-        if ((p.getX() == 0) || (p.getX() == width - 1) || (p.getY() == 0) || (p.getY() == height - 1)) {
-            return true;
-        }
-        return false;
+        return (p.getX() == 0) || (p.getX() == width - 1) || (p.getY() == 0) || (p.getY() == height - 1);
     }
 
     public boolean coinPlateau(Point2D p) {
-        if ((p.getX() == 0) && ((p.getY() == 0) || (p.getY() == height - 1)) || (p.getX() == width - 1) && ((p.getY() == 0) || (p.getY() == height - 1))) {
-            return true;
-        }
-        return false;
+        return ((p.getX() == 0) && ((p.getY() == 0) || (p.getY() == height - 1))) || ((p.getX() == width - 1) && ((p.getY() == 0) || (p.getY() == height - 1)));
     }
 
     public int nombreLibertes(Groupe g) {
@@ -155,15 +146,14 @@ public class Goban {
         Point2D sud = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() - 1);
         Point2D est = new Point2D(pi.getPosition().getX() + 1, pi.getPosition().getY());
         Point2D ouest = new Point2D(pi.getPosition().getX() - 1, pi.getPosition().getY());
-        listeAdjacents.add(nord);
-        listeAdjacents.add(sud);
-        listeAdjacents.add(est);
-        listeAdjacents.add(ouest);
+        if (!horsPlateau(nord))listeAdjacents.add(nord);
+        if (!horsPlateau(sud))listeAdjacents.add(sud);
+        if (!horsPlateau(est))listeAdjacents.add(est);
+        if (!horsPlateau(ouest))listeAdjacents.add(ouest);
 
         for (Point2D p : listeAdjacents) {
             if (!intersectionLibre(p)
-                    && listePierres[p.getX()][p.getY()].isBlanc() == blanc
-                    && !horsPlateau(p)) {
+                    && listePierres[p.getX()][p.getY()].isBlanc() == blanc) {
                 listeVoisins.add(listePierres[p.getX()][p.getY()]);
             }
         }
