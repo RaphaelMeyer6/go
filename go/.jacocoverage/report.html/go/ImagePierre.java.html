@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ImagePierre.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;go&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">go</a> &gt; <span class="el_source">ImagePierre.java</span></div><h1>ImagePierre.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package go;
+
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Composite;
+import java.awt.Cursor;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
+/**
+ * Class that defines the graphic object for a position on the Goban
+ * @author Akatosh
+ */
+public class ImagePierre extends JPanel{
+    
+    private Pierre pierre;
+    private int width,height;
+    private int x,y;
+    
+    /**
+     * Constructor of the position
+     * @param pierre a given stone, can be null
+     * @param width the width of the image
+     * @param height the height of the image
+     */
+<span class="nc" id="L37">    public ImagePierre(int x, int y, Pierre pierre, int width, int height){</span>
+<span class="nc" id="L38">        this.pierre=pierre;</span>
+<span class="nc" id="L39">        this.width=width;</span>
+<span class="nc" id="L40">        this.height=height;</span>
+<span class="nc" id="L41">        this.x=x;</span>
+<span class="nc" id="L42">        this.y=y;</span>
+        
+<span class="nc" id="L44">        this.setBackground(new Color(0,0,0,0));</span>
+        
+<span class="nc" id="L46">        addMouseListener(new MouseListener() {</span>
+            @Override
+            public void mouseClicked(MouseEvent e) {
+<span class="nc" id="L49">                System.out.println(&quot;Position&quot;+x+&quot;,&quot;+y);</span>
+<span class="nc" id="L50">            }</span>
+            @Override
+            public void mouseEntered(MouseEvent e) {
+<span class="nc" id="L53">                setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));</span>
+<span class="nc" id="L54">            }</span>
+            @Override
+            public void mouseExited(MouseEvent e) {
+<span class="nc" id="L57">                setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));</span>
+<span class="nc" id="L58">            }</span>
+            @Override
+<span class="nc" id="L60">            public void mousePressed(MouseEvent e) {}</span>
+            @Override
+<span class="nc" id="L62">            public void mouseReleased(MouseEvent e) {}</span>
+        });	
+<span class="nc" id="L64">    }</span>
+    /**
+     * Paint the stone in black or white or do nothing if stone is null
+     * @param g graphic object for override
+     */
+    @Override
+    protected void paintComponent(Graphics g) {
+<span class="nc" id="L71">        super.paintComponent(g);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        if(pierre!=null){</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">            if(pierre.isBlanc()){</span>
+<span class="nc" id="L74">                g.setColor(Color.WHITE);</span>
+            }else{
+<span class="nc" id="L76">                g.setColor(Color.BLACK);</span>
+            }
+
+<span class="nc" id="L79">            g.fillOval((width-(int)(width*0.8))/2, (height-(int)(height*0.8))/2, (int)(width*0.8), (int)(height*0.8));</span>
+        }
+        
+<span class="nc" id="L82">    }</span>
+    public void setPierre(Pierre pierre){
+<span class="nc" id="L84">        this.pierre=pierre;</span>
+<span class="nc" id="L85">        repaint();</span>
+<span class="nc" id="L86">    }</span>
+    public Pierre getPierre(){
+<span class="nc" id="L88">        return this.pierre;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

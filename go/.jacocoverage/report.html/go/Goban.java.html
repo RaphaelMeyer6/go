@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Goban.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;go&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">go</a> &gt; <span class="el_source">Goban.java</span></div><h1>Goban.java</h1><pre class="source lang-java linenums">/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package go;
+
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author avinesse
+ */
+public class Goban {
+
+    private int height;
+    private int width;
+    private Pierre[][] listePierres;
+    private int blanchesCapturees;
+    private int noiresCapturees;
+
+    /**
+     * Constructeur par defaut
+     *
+     * @param height
+     * @param width
+     */
+<span class="nc" id="L31">    public Goban(int height, int width) {</span>
+<span class="nc" id="L32">        this.height = height;</span>
+<span class="nc" id="L33">        this.width = width;</span>
+<span class="nc" id="L34">        listePierres = new Pierre[height][width];</span>
+<span class="nc" id="L35">        this.blanchesCapturees=0;</span>
+<span class="nc" id="L36">        this.noiresCapturees=0;</span>
+<span class="nc" id="L37">    }</span>
+
+<span class="fc" id="L39">    public Goban(int height, int width, Pierre[][] listePierres) {</span>
+<span class="fc" id="L40">        this.height = height;</span>
+<span class="fc" id="L41">        this.width = width;</span>
+<span class="fc" id="L42">        this.listePierres = listePierres;</span>
+<span class="fc" id="L43">        this.blanchesCapturees=0;</span>
+<span class="fc" id="L44">        this.noiresCapturees=0;</span>
+<span class="fc" id="L45">    }</span>
+
+    public Pierre[][] getListePierres() {
+<span class="fc" id="L48">        return listePierres;</span>
+    }
+
+    public void setListePierres(Pierre[][] listePierres) {
+<span class="nc" id="L52">        this.listePierres = listePierres;</span>
+<span class="nc" id="L53">    }</span>
+
+    public int getHeight() {
+<span class="fc" id="L56">        return height;</span>
+    }
+
+    public int getBlanchesCapturees() {
+<span class="nc" id="L60">        return blanchesCapturees;</span>
+    }
+
+    public void setBlanchesCapturees(int blanchesCapturees) {
+<span class="nc" id="L64">        this.blanchesCapturees = blanchesCapturees;</span>
+<span class="nc" id="L65">    }</span>
+
+    public int getNoiresCapturees() {
+<span class="nc" id="L68">        return noiresCapturees;</span>
+    }
+
+    public void setNoiresCapturees(int noiresCapturees) {
+<span class="nc" id="L72">        this.noiresCapturees = noiresCapturees;</span>
+<span class="nc" id="L73">    }</span>
+
+    public int getWidth() {
+<span class="fc" id="L76">        return width;</span>
+    }
+
+    public void setHeight(int height) {
+<span class="nc" id="L80">        this.height = height;</span>
+<span class="nc" id="L81">    }</span>
+
+    public void setWidth(int width) {
+<span class="nc" id="L84">        this.width = width;</span>
+<span class="nc" id="L85">    }</span>
+
+    public boolean intersectionLibre(Point2D p) {
+<span class="nc" id="L88">        boolean estLibre = true;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        if (listePierres[p.getX()][p.getY()] != null) {</span>
+<span class="nc" id="L90">            estLibre = false;</span>
+        }
+<span class="nc" id="L92">        return estLibre;</span>
+    }
+
+    public boolean horsPlateau(Point2D p) {
+<span class="nc bnc" id="L96" title="All 8 branches missed.">        if ((p.getX() &lt; 0) || (p.getX() &gt;= width) || (p.getY() &lt; 0) || (p.getY() &gt;= height)) {</span>
+<span class="nc" id="L97">            return true;</span>
+        }
+<span class="nc" id="L99">        return false;</span>
+    }
+
+    public boolean bordPlateau(Point2D p) {
+<span class="nc bnc" id="L103" title="All 8 branches missed.">        if ((p.getX() == 0) || (p.getX() == width - 1) || (p.getY() == 0) || (p.getY() == height - 1)) {</span>
+<span class="nc" id="L104">            return true;</span>
+        }
+<span class="nc" id="L106">        return false;</span>
+    }
+
+    public boolean coinPlateau(Point2D p) {
+<span class="nc bnc" id="L110" title="All 12 branches missed.">        if ((p.getX() == 0) &amp;&amp; ((p.getY() == 0) || (p.getY() == height - 1)) || (p.getX() == width - 1) &amp;&amp; ((p.getY() == 0) || (p.getY() == height - 1))) {</span>
+<span class="nc" id="L111">            return true;</span>
+        }
+<span class="nc" id="L113">        return false;</span>
+    }
+
+    public int nombreLibertes(Groupe g) {
+<span class="nc" id="L117">        int lib = 0;</span>
+<span class="nc" id="L118">        ArrayList&lt;Point2D&gt; listeLibertes = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        for (Pierre pi : g.getPierres()) {</span>
+<span class="nc" id="L120">            ArrayList&lt;Point2D&gt; listeAdjacents = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L121">            Point2D nord = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() + 1);</span>
+<span class="nc" id="L122">            Point2D sud = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() - 1);</span>
+<span class="nc" id="L123">            Point2D est = new Point2D(pi.getPosition().getX() + 1, pi.getPosition().getY());</span>
+<span class="nc" id="L124">            Point2D ouest = new Point2D(pi.getPosition().getX() - 1, pi.getPosition().getY());</span>
+<span class="nc" id="L125">            listeAdjacents.add(nord);</span>
+<span class="nc" id="L126">            listeAdjacents.add(sud);</span>
+<span class="nc" id="L127">            listeAdjacents.add(est);</span>
+<span class="nc" id="L128">            listeAdjacents.add(ouest);</span>
+
+<span class="nc bnc" id="L130" title="All 2 branches missed.">            for (Point2D p : listeAdjacents) {</span>
+<span class="nc bnc" id="L131" title="All 6 branches missed.">                if (!horsPlateau(p) &amp;&amp; intersectionLibre(p) &amp;&amp; !listeLibertes.contains(p)) {</span>
+<span class="nc" id="L132">                    listeLibertes.add(p);</span>
+<span class="nc" id="L133">                    lib++;</span>
+                }
+<span class="nc" id="L135">            }</span>
+<span class="nc" id="L136">        }</span>
+
+
+<span class="nc" id="L139">        return lib;</span>
+    }
+
+    /**
+     * Return a list of neighbours of the asked color
+     *
+     * @param pi
+     * @param blanc
+     * @return
+     */
+    public ArrayList&lt;Pierre&gt; voisins(Pierre pi, boolean blanc) {
+<span class="nc" id="L150">        ArrayList&lt;Point2D&gt; listeAdjacents = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L151">        ArrayList&lt;Pierre&gt; listeVoisins = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L152">        Point2D nord = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() + 1);</span>
+<span class="nc" id="L153">        Point2D sud = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() - 1);</span>
+<span class="nc" id="L154">        Point2D est = new Point2D(pi.getPosition().getX() + 1, pi.getPosition().getY());</span>
+<span class="nc" id="L155">        Point2D ouest = new Point2D(pi.getPosition().getX() - 1, pi.getPosition().getY());</span>
+<span class="nc" id="L156">        listeAdjacents.add(nord);</span>
+<span class="nc" id="L157">        listeAdjacents.add(sud);</span>
+<span class="nc" id="L158">        listeAdjacents.add(est);</span>
+<span class="nc" id="L159">        listeAdjacents.add(ouest);</span>
+
+<span class="nc bnc" id="L161" title="All 2 branches missed.">        for (Point2D p : listeAdjacents) {</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">            if (!intersectionLibre(p)</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">                    &amp;&amp; listePierres[p.getX()][p.getY()].isBlanc() == blanc) {</span>
+<span class="nc" id="L164">                listeVoisins.add(listePierres[p.getX()][p.getY()]);</span>
+            }
+<span class="nc" id="L166">        }</span>
+<span class="nc" id="L167">        return listeVoisins;</span>
+    }
+
+    public void ajouterGroupe(Pierre pi) {
+<span class="nc" id="L171">    }</span>
+    
+    public void poserPierre(Point2D p, boolean blanc) {
+<span class="nc" id="L174">        Pierre pierre = new Pierre(blanc, p);</span>
+<span class="nc" id="L175">        this.listePierres[p.getX()][p.getY()] = pierre;</span>
+
+<span class="nc bnc" id="L177" title="All 2 branches missed.">        if (voisins(pierre, pierre.isBlanc()).isEmpty()) {</span>
+<span class="nc" id="L178">            ArrayList&lt;Pierre&gt; listeUnePierre = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L179">            listeUnePierre.add(pierre);</span>
+<span class="nc" id="L180">            pierre.setGroupe(new Groupe(listeUnePierre));</span>
+<span class="nc" id="L181">        }</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">        else for (Pierre pi : voisins(pierre,pierre.isBlanc())){</span>
+<span class="nc" id="L183">            pierre.getGroupe().fusionnerGroupes(pi.getGroupe());</span>
+<span class="nc" id="L184">        }</span>
+<span class="nc" id="L185">    }</span>
+    
+     /**
+     * Capture des groupes adverses 
+     * 
+     * @param p
+     * @return 
+     */
+    public boolean capture(Pierre p){
+        
+<span class="nc" id="L195">        boolean adversairesCaptures = false;</span>
+<span class="nc" id="L196">        ArrayList&lt;Pierre&gt; voisinsAdverses = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">        voisinsAdverses = voisins(p,!p.isBlanc());</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">        if(!voisinsAdverses.isEmpty()){</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">            for(Pierre voisinAdverse : voisinsAdverses){</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">                if(this.nombreLibertes(voisinAdverse.getGroupe())==0)</span>
+                {
+<span class="nc" id="L202">                    this.captureGroupe(voisinAdverse.getGroupe());</span>
+<span class="nc" id="L203">                    adversairesCaptures = true;</span>
+                }
+<span class="nc" id="L205">            }</span>
+        }
+<span class="nc" id="L207">        return adversairesCaptures;</span>
+    }
+    
+    /**
+     * Capture du groupe avec modification des compteurs de pierres capturees
+     * @param g 
+     */
+    public void captureGroupe(Groupe g){
+        
+<span class="nc" id="L216">        ArrayList&lt;Pierre&gt; pierres = g.getPierres();</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">        if(pierres.get(0).isBlanc()){</span>
+<span class="nc" id="L218">            this.blanchesCapturees = this.blanchesCapturees + pierres.size();</span>
+        }
+        else{
+<span class="nc" id="L221">            this.noiresCapturees = this.noiresCapturees+ pierres.size();</span>
+        }
+<span class="nc bnc" id="L223" title="All 2 branches missed.">        for(Pierre p : g.getPierres()){</span>
+<span class="nc" id="L224">            this.listePierres[p.getPosition().getX()][p.getPosition().getY()]</span>
+                    = null;
+<span class="nc" id="L226">        }</span>
+<span class="nc" id="L227">    }</span>
+
+    public void enregistrer(String fileName) {
+
+<span class="nc" id="L231">        BufferedWriter bw = null;</span>
+        try {
+<span class="nc" id="L233">            bw = new BufferedWriter(new FileWriter(fileName));</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">            for (int j = 0; j &lt; this.getHeight(); j++) {</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">                for (int i = 0; i &lt; this.getWidth(); i++) {</span>
+<span class="nc bnc" id="L236" title="All 2 branches missed.">                    if (listePierres[i][j] == null) {</span>
+<span class="nc" id="L237">                        bw.write(&quot;X &quot;);</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">                    } else if (listePierres[i][j].isBlanc()) {</span>
+<span class="nc" id="L239">                        bw.write(&quot;B &quot;);</span>
+                    } else {
+<span class="nc" id="L241">                        bw.write(&quot;N &quot;);</span>
+                    }
+                }
+<span class="nc" id="L244">                bw.newLine();</span>
+            }
+<span class="nc" id="L246">        } catch (FileNotFoundException e) {</span>
+<span class="nc" id="L247">            e.printStackTrace();</span>
+<span class="nc" id="L248">        } catch (IOException e) {</span>
+<span class="nc" id="L249">            e.printStackTrace();</span>
+        } finally {
+<span class="nc bnc" id="L251" title="All 8 branches missed.">            if (bw != null) {</span>
+                try {
+<span class="nc" id="L253">                    bw.close();</span>
+<span class="nc" id="L254">                } catch (IOException e) {</span>
+<span class="nc" id="L255">                    e.printStackTrace();</span>
+<span class="nc" id="L256">                }</span>
+            }
+        }
+
+<span class="nc" id="L260">    }</span>
+
+    public boolean seSuicide(Pierre pi) {
+
+<span class="nc" id="L264">        boolean ret = true;</span>
+<span class="nc bnc" id="L265" title="All 4 branches missed.">        if ((voisins(pi, !pi.isBlanc()).size() == 4)</span>
+<span class="nc bnc" id="L266" title="All 6 branches missed.">                || ((voisins(pi, !pi.isBlanc()).size() == 3) &amp;&amp; (bordPlateau(pi.getPosition())))</span>
+<span class="nc bnc" id="L267" title="All 6 branches missed.">                || ((voisins(pi, !pi.isBlanc()).size() == 2) &amp;&amp; (coinPlateau(pi.getPosition())))) {</span>
+<span class="nc" id="L268">            return true;</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">        } else if ((voisins(pi, pi.isBlanc()).isEmpty())) {</span>
+<span class="nc" id="L270">            return false;</span>
+        } else {
+<span class="nc bnc" id="L272" title="All 2 branches missed.">            for (Pierre pierre : voisins(pi, pi.isBlanc())) {</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">                if (nombreLibertes(pierre.getGroupe()) &gt; 1) {</span>
+<span class="nc" id="L274">                    ret = false;</span>
+                }
+<span class="nc" id="L276">            }</span>
+        }
+
+<span class="nc" id="L279">        return ret;</span>
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

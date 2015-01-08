@@ -4,8 +4,10 @@
  */
 package go;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -93,24 +95,15 @@ public class Goban {
     }
 
     public boolean horsPlateau(Point2D p) {
-        if ((p.getX() < 0) || (p.getX() >= width) || (p.getY() < 0) || (p.getY() >= height)) {
-            return true;
-        }
-        return false;
+        return (p.getX() < 0) || (p.getX() >= width) || (p.getY() < 0) || (p.getY() >= height);
     }
 
     public boolean bordPlateau(Point2D p) {
-        if ((p.getX() == 0) || (p.getX() == width - 1) || (p.getY() == 0) || (p.getY() == height - 1)) {
-            return true;
-        }
-        return false;
+        return (p.getX() == 0) || (p.getX() == width - 1) || (p.getY() == 0) || (p.getY() == height - 1);
     }
 
     public boolean coinPlateau(Point2D p) {
-        if ((p.getX() == 0) && ((p.getY() == 0) || (p.getY() == height - 1)) || (p.getX() == width - 1) && ((p.getY() == 0) || (p.getY() == height - 1))) {
-            return true;
-        }
-        return false;
+        return ((p.getX() == 0) && ((p.getY() == 0) || (p.getY() == height - 1))) || ((p.getX() == width - 1) && ((p.getY() == 0) || (p.getY() == height - 1)));
     }
 
     public int nombreLibertes(Groupe g) {
@@ -160,7 +153,8 @@ public class Goban {
 
         for (Point2D p : listeAdjacents) {
             if (!intersectionLibre(p)
-                    && listePierres[p.getX()][p.getY()].isBlanc() == blanc) {
+                    && listePierres[p.getX()][p.getY()].isBlanc() == blanc
+                    && !horsPlateau(p)) {
                 listeVoisins.add(listePierres[p.getX()][p.getY()]);
             }
         }
@@ -279,5 +273,66 @@ public class Goban {
         return ret;
 
     }
-
+    
+    public Goban trouverGoban(String fileName, int tour){
+        Goban plateau = new Goban(height,width);
+        
+        BufferedReader br=null;
+        ArrayList<String> lineStack =null; 
+        try{
+            
+            br = new BufferedReader(new FileReader(fileName));
+            lineStack = new ArrayList<String>();
+            String line;
+            while((line=br.readLine())!=null){
+                //We stack the lines readed in an array
+                lineStack.add(line);
+            }
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }finally{
+            if(br!=null){
+                try{
+                    br.close();
+                    //We parse the file if everything went fine
+                    plateau=parser(lineStack, tour);
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+                
+        return plateau;
+    }
+    
+    
+    private Goban parser(ArrayList<String> lineStack, int tour){
+        Goban plateau = new Goban(height,width);
+        int i=0;
+        int j =0;
+        ArrayList<String> goban = new ArrayList<String>();
+        
+        for (String s : lineStack){
+            if (s.equals("tour")){
+                i++;
+            }
+            if (i==tour){
+                goban.add(s);
+            }
+        }
+        
+        i=0;
+        j=0;
+        for (String s: goban){
+            for(String s2 : s.split(" ")){
+                plateau.poserPierre(new Point2D(i,j), s2.equals("B"));
+                i++;
+            }
+            j++;
+        }
+        
+        return plateau;
+    }
 }

@@ -12,6 +12,10 @@ public class Jeu {
     int tour;
     int passesJ1;
     int passesJ2;
+    boolean partieFinie = false;
+    boolean joueurJoue = false;
+    Point2D action;
+    
     
     /**
      * Constructeur de base
@@ -34,23 +38,35 @@ public class Jeu {
         this.tour = 1;
     }
     /**
-     * Permet de lancer une partie
+     * Permet de jouer un coup. si le point envoyé est [-1;-1] le joueur passe
+     * son tour
+     * @param point
+     * @param joueur 
      */
-    public void jouer(){
-        while (!finPartie()){
-            if(j1.jouer(plateau)){  //Si le joueur joue on réinitialise le nombre
-                passesJ1=0;         //De tours pasés
+    public void jouer(Point2D point, boolean joueur){
+        this.action=point;
+        this.joueurJoue = !joueur;
+        if (joueur){
+            if ( action.getX()==-1 && action.getY()==-1){
+            passesJ1++;
             }
             else {
-                passesJ1++;         //Sinon on incremente
-            }
-            if(j2.jouer(plateau)){
-                passesJ2=0;
-            }
-            else{
-                passesJ2++;
+                Pierre pierre = new Pierre(joueur,point);
+                plateau.ajouterGroupe(pierre);
+                passesJ1=0;
             }
         }
+        else{
+            if ( action.getX()==-1 && action.getY()==-1){
+            passesJ2++;
+            }
+            else {
+                Pierre pierre = new Pierre(joueur,point);
+                plateau.ajouterGroupe(pierre);
+                passesJ2=0;
+            }
+        }
+        partieFinie=finPartie();
     }
     
     /**
@@ -60,4 +76,14 @@ public class Jeu {
     public boolean finPartie(){
         return ((passesJ1>=2)&&(passesJ2>=2));
     }
+    
+    /**
+     * Renvois true si c'est le tour du joueur 2
+     * et false si c'est le tour du joueur 1
+     * @return 
+     */
+    public boolean getJoueurJoue(){
+        return this.joueurJoue;
+    }
+    
 }
