@@ -93,13 +93,27 @@ public class GobanTest {
     @Test
     public void testBordPlateau() {
         System.out.println("bordPlateau");
-        Point2D p = null;
-        Goban instance = null;
-        boolean expResult = false;
+        Point2D p = new Point2D(0,0);
+        Point2D p1 = new Point2D(-1,1);
+        Point2D p2 = new Point2D(4,2);
+        Point2D p3 = new Point2D(2,2);
+        Goban instance = new Goban(5,5);
+        
+        boolean expResult = true;
         boolean result = instance.bordPlateau(p);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        expResult = false;
+        result = instance.bordPlateau(p1);
+        assertEquals(expResult, result);
+        
+        expResult = true;
+        result = instance.bordPlateau(p2);
+        assertEquals(expResult, result);       
+        
+        expResult = false;
+        result = instance.bordPlateau(p3);
+        assertEquals(expResult, result);
     }
 
     /**
@@ -108,13 +122,28 @@ public class GobanTest {
     @Test
     public void testCoinPlateau() {
         System.out.println("coinPlateau");
-        Point2D p = null;
-        Goban instance = null;
-        boolean expResult = false;
+        Point2D p = new Point2D(0,0);
+        Point2D p1 = new Point2D(-1,1);
+        Point2D p2 = new Point2D(4,4);
+        Point2D p3 = new Point2D(4,3);
+        Goban instance = new Goban(5,5);
+        
+        boolean expResult = true;
         boolean result = instance.coinPlateau(p);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        expResult = false;
+        result = instance.coinPlateau(p1);
+        assertEquals(expResult, result);
+        
+        expResult = true;
+        result = instance.coinPlateau(p2);
+        assertEquals(expResult, result);       
+        
+        expResult = false;
+        result = instance.coinPlateau(p3);
+        assertEquals(expResult, result);
+        
     }
 
     /**
