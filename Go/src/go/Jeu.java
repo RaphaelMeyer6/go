@@ -52,7 +52,7 @@ public class Jeu {
             }
             else {
                 Pierre pierre = new Pierre(joueur,point);
-                plateau.ajouterGroupe(pierre);
+                plateau.poserPierre(pierre.getPosition(),pierre.isBlanc());
                 passesJ1=0;
             }
         }
