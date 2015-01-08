@@ -39,8 +39,8 @@ public class JeuTest {
         Jeu instance = new Jeu (goban,blanc,noir);
         Point2D point = new Point2D (3,2);
         instance.jouer(point, false);
-        assertEquals(instance.joueurJoue,true);
-        assertEquals(instance.passesJ1,0);
+        assertEquals(instance.getJoueurJoue(),true);
+        assertEquals(instance.getPassesJ1(),0);
     }
 
     /**
@@ -54,10 +54,10 @@ public class JeuTest {
         Goban goban = new Goban (10,10);
         Jeu instance = new Jeu (goban,blanc,noir);
         Jeu instance2 = new Jeu (goban,blanc,noir);
-        instance.passesJ1=2;
-        instance.passesJ2=1;
-        instance2.passesJ1=2;
-        instance2.passesJ2=2;
+        instance.setPassesJ1(2);
+        instance.setPassesJ2(1);
+        instance2.setPassesJ1(2);
+        instance2.setPassesJ2(2);
         boolean expResult = false;
         boolean result = instance.finPartie();
         assertEquals(expResult, result);
