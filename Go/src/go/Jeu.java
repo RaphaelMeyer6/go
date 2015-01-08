@@ -6,15 +6,15 @@ package go;
  */
 public class Jeu {
     
-    Joueur j1;
-    Joueur j2;
-    Goban plateau;
-    int tour;
-    int passesJ1;
-    int passesJ2;
-    boolean partieFinie = false;
-    boolean joueurJoue = false;
-    Point2D action;
+    private Joueur j1;
+    private Joueur j2;
+    private Goban plateau;
+    private int tour;
+    private int passesJ1;
+    private int passesJ2;
+    private boolean partieFinie = false;
+    private boolean joueurJoue = false;
+    private Point2D action;
     
     
     /**
@@ -82,5 +82,30 @@ public class Jeu {
     public boolean getJoueurJoue(){
         return this.joueurJoue;
     }
+    /**
+     * Renvoie le plateau de jeu
+     * @return le goban
+     */
+    public Goban getPlateau(){
+        return this.plateau;
+    }
+
+    public int getPassesJ1() {
+        return passesJ1;
+    }
+
+    public int getPassesJ2() {
+        return passesJ2;
+    }
+
+    public void setPassesJ1(int passesJ1) {
+        this.passesJ1 = passesJ1;
+    }
+
+    public void setPassesJ2(int passesJ2) {
+        this.passesJ2 = passesJ2;
+    }
+    
+    
     
 }
