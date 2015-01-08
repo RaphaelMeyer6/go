@@ -91,6 +91,9 @@ public class Goban {
         if (listePierres[p.getX()][p.getY()] != null) {
             estLibre = false;
         }
+        if (horsPlateau(p)){
+            estLibre = false;
+        }
         return estLibre;
     }
 
