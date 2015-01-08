@@ -210,13 +210,17 @@ public class GobanTest {
     @Test
     public void testCapture() {
         System.out.println("capture");
-        Pierre p = null;
-        Goban instance = null;
+        Pierre p = new Pierre (true,3,2);
+        Pierre listePierres[][] = new Pierre[10][10];
+        Goban instance = new Goban(10,10);
+        listePierres[p.getPosition().getX()][p.getPosition().getY()] = p;
         boolean expResult = false;
         boolean result = instance.capture(p);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        Pierre ennemi = new Pierre (false,3,3);
+        listePierres[ennemi.getPosition().getX()][ennemi.getPosition().getY()] = ennemi;
+        assertEquals(expResult, result);
     }
 
     /**
