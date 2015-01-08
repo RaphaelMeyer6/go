@@ -15,11 +15,11 @@ public class Pierre {
     * @param blanc
     * @param position 
     */
-<span class="nc" id="L18">   public Pierre(boolean blanc, Point2D position){</span>
-<span class="nc" id="L19">       this.blanc=blanc;</span>
-<span class="nc" id="L20">       this.position=new Point2D(position);</span>
-<span class="nc" id="L21">       this.groupe=null;</span>
-<span class="nc" id="L22">   }</span>
+<span class="fc" id="L18">   public Pierre(boolean blanc, Point2D position){</span>
+<span class="fc" id="L19">       this.blanc=blanc;</span>
+<span class="fc" id="L20">       this.position=new Point2D(position);</span>
+<span class="fc" id="L21">       this.groupe=null;</span>
+<span class="fc" id="L22">   }</span>
    
       /**
     * Constructeur avec groupe
@@ -39,11 +39,11 @@ public class Pierre {
     * @param x
     * @param y 
     */
-<span class="nc" id="L42">   public Pierre(boolean blanc,int x,int y){</span>
-<span class="nc" id="L43">       this.blanc=blanc;</span>
-<span class="nc" id="L44">       this.position= new Point2D(x,y);</span>
-<span class="nc" id="L45">       this.groupe=null;</span>
-<span class="nc" id="L46">   }</span>
+<span class="fc" id="L42">   public Pierre(boolean blanc,int x,int y){</span>
+<span class="fc" id="L43">       this.blanc=blanc;</span>
+<span class="fc" id="L44">       this.position= new Point2D(x,y);</span>
+<span class="fc" id="L45">       this.groupe=null;</span>
+<span class="fc" id="L46">   }</span>
       /**
     * Constructeur pour une position x,y
     * @param blanc
@@ -64,14 +64,14 @@ public class Pierre {
     * @return 
     */
    public boolean isBlanc(){
-<span class="nc" id="L67">       return this.blanc;</span>
+<span class="fc" id="L67">       return this.blanc;</span>
    }
    /**
     * Return the position
     * @return 
     */
    public Point2D getPosition(){
-<span class="nc" id="L74">       return this.position;</span>
+<span class="fc" id="L74">       return this.position;</span>
    }
    /**
     * Return true if the stones have the same color
@@ -79,7 +79,7 @@ public class Pierre {
     * @return 
     */
    public boolean sameColor(Pierre p){
-<span class="nc bnc" id="L82" title="All 2 branches missed.">       return this.isBlanc() == p.isBlanc();</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">       return this.isBlanc() == p.isBlanc();</span>
    }
 
    /**
@@ -87,7 +87,7 @@ public class Pierre {
     * @return 
     */
     public Groupe getGroupe() {
-<span class="nc" id="L90">        return groupe;</span>
+<span class="fc" id="L90">        return groupe;</span>
     }
 
     /**
@@ -95,8 +95,8 @@ public class Pierre {
      * @param groupe 
      */
     public void setGroupe(Groupe groupe) {
-<span class="nc" id="L98">        this.groupe = groupe;</span>
-<span class="nc" id="L99">    }</span>
+<span class="fc" id="L98">        this.groupe = groupe;</span>
+<span class="fc" id="L99">    }</span>
            
    
 }
