@@ -34,16 +34,16 @@ public class Goban {
         this.height = height;
         this.width = width;
         listePierres = new Pierre[height][width];
-        this.blanchesCapturees=0;
-        this.noiresCapturees=0;
+        this.blanchesCapturees = 0;
+        this.noiresCapturees = 0;
     }
 
     public Goban(int height, int width, Pierre[][] listePierres) {
         this.height = height;
         this.width = width;
         this.listePierres = listePierres;
-        this.blanchesCapturees=0;
-        this.noiresCapturees=0;
+        this.blanchesCapturees = 0;
+        this.noiresCapturees = 0;
     }
 
     public Pierre[][] getListePierres() {
@@ -88,13 +88,12 @@ public class Goban {
 
     public boolean intersectionLibre(Point2D p) {
         boolean estLibre = true;
-        if (horsPlateau(p)){
+        if (listePierres[p.getX()][p.getY()] != null) {
             estLibre = false;
         }
-        else if(listePierres[p.getX()][p.getY()] != null){
+        if (horsPlateau(p)) {
             estLibre = false;
         }
-        
         return estLibre;
     }
 
@@ -119,10 +118,18 @@ public class Goban {
             Point2D sud = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() - 1);
             Point2D est = new Point2D(pi.getPosition().getX() + 1, pi.getPosition().getY());
             Point2D ouest = new Point2D(pi.getPosition().getX() - 1, pi.getPosition().getY());
-            listeAdjacents.add(nord);
-            listeAdjacents.add(sud);
-            listeAdjacents.add(est);
-            listeAdjacents.add(ouest);
+            if (!horsPlateau(nord)) {
+                listeAdjacents.add(nord);
+            }
+            if (!horsPlateau(sud)) {
+                listeAdjacents.add(sud);
+            }
+            if (!horsPlateau(est)) {
+                listeAdjacents.add(est);
+            }
+            if (!horsPlateau(ouest)) {
+                listeAdjacents.add(ouest);
+            }
 
             for (Point2D p : listeAdjacents) {
                 if (!horsPlateau(p) && intersectionLibre(p) && !listeLibertes.contains(p)) {
@@ -131,7 +138,6 @@ public class Goban {
                 }
             }
         }
-
 
         return lib;
     }
@@ -150,55 +156,62 @@ public class Goban {
         Point2D sud = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() - 1);
         Point2D est = new Point2D(pi.getPosition().getX() + 1, pi.getPosition().getY());
         Point2D ouest = new Point2D(pi.getPosition().getX() - 1, pi.getPosition().getY());
-        listeAdjacents.add(nord);
-        listeAdjacents.add(sud);
-        listeAdjacents.add(est);
-        listeAdjacents.add(ouest);
+        if (!horsPlateau(nord)) {
+            listeAdjacents.add(nord);
+        }
+        if (!horsPlateau(sud)) {
+            listeAdjacents.add(sud);
+        }
+        if (!horsPlateau(est)) {
+            listeAdjacents.add(est);
+        }
+        if (!horsPlateau(ouest)) {
+            listeAdjacents.add(ouest);
+        }
 
         for (Point2D p : listeAdjacents) {
-            if(!intersectionLibre(p)){
-                if (!horsPlateau(p)
-                        && listePierres[p.getX()][p.getY()].isBlanc() == blanc) {
-                    listeVoisins.add(listePierres[p.getX()][p.getY()]);
-            }    
+            if (!intersectionLibre(p)
+                    && listePierres[p.getX()][p.getY()].isBlanc() == blanc) {
+                listeVoisins.add(listePierres[p.getX()][p.getY()]);
             }
-
         }
         return listeVoisins;
     }
 
     public void ajouterGroupe(Pierre pi) {
     }
-    
+
     public void poserPierre(Point2D p, boolean blanc) {
         Pierre pierre = new Pierre(blanc, p);
-        this.listePierres[p.getX()][p.getY()] = pierre;
-
-        if (voisins(pierre, pierre.isBlanc()).isEmpty()) {
-            ArrayList<Pierre> listeUnePierre = new ArrayList<>();
-            listeUnePierre.add(pierre);
-            pierre.setGroupe(new Groupe(listeUnePierre));
-        }
-        else for (Pierre pi : voisins(pierre,pierre.isBlanc())){
-            pierre.getGroupe().fusionnerGroupes(pi.getGroupe());
+        
+        if (!seSuicide(pierre)) {
+                this.listePierres[p.getX()][p.getY()] = pierre;
+                ArrayList<Pierre> listeUnePierre = new ArrayList<>();
+                listeUnePierre.add(pierre);
+                pierre.setGroupe(new Groupe(listeUnePierre));
+                
+            if (!voisins(pierre, pierre.isBlanc()).isEmpty()) {                       
+                for (Pierre pi : voisins(pierre, pierre.isBlanc())) {
+                    pierre.getGroupe().fusionnerGroupes(pi.getGroupe());
+                }
+            }
         }
     }
-    
-     /**
-     * Capture des groupes adverses 
-     * 
+
+    /**
+     * Capture des groupes adverses
+     *
      * @param p
-     * @return 
+     * @return
      */
-    public boolean capture(Pierre p){
-        
+    public boolean capture(Pierre p) {
+
         boolean adversairesCaptures = false;
         ArrayList<Pierre> voisinsAdverses = new ArrayList<>();
-        voisinsAdverses = voisins(p,!p.isBlanc());
-        if(!voisinsAdverses.isEmpty()){
-            for(Pierre voisinAdverse : voisinsAdverses){
-                if(this.nombreLibertes(voisinAdverse.getGroupe())==0)
-                {
+        voisinsAdverses = voisins(p, !p.isBlanc());
+        if (!voisinsAdverses.isEmpty()) {
+            for (Pierre voisinAdverse : voisinsAdverses) {
+                if (this.nombreLibertes(voisinAdverse.getGroupe()) == 0) {
                     this.captureGroupe(voisinAdverse.getGroupe());
                     adversairesCaptures = true;
                 }
@@ -206,21 +219,21 @@ public class Goban {
         }
         return adversairesCaptures;
     }
-    
+
     /**
      * Capture du groupe avec modification des compteurs de pierres capturees
-     * @param g 
+     *
+     * @param g
      */
-    public void captureGroupe(Groupe g){
-        
+    public void captureGroupe(Groupe g) {
+
         ArrayList<Pierre> pierres = g.getPierres();
-        if(pierres.get(0).isBlanc()){
+        if (pierres.get(0).isBlanc()) {
             this.blanchesCapturees = this.blanchesCapturees + pierres.size();
+        } else {
+            this.noiresCapturees = this.noiresCapturees + pierres.size();
         }
-        else{
-            this.noiresCapturees = this.noiresCapturees+ pierres.size();
-        }
-        for(Pierre p : g.getPierres()){
+        for (Pierre p : g.getPierres()) {
             this.listePierres[p.getPosition().getX()][p.getPosition().getY()]
                     = null;
         }
@@ -279,66 +292,65 @@ public class Goban {
         return ret;
 
     }
-    
-    public Goban trouverGoban(String fileName, int tour){
-        Goban plateau = new Goban(height,width);
-        
-        BufferedReader br=null;
-        ArrayList<String> lineStack =null; 
-        try{
-            
+
+    public Goban trouverGoban(String fileName, int tour) {
+        Goban plateau = new Goban(height, width);
+
+        BufferedReader br = null;
+        ArrayList<String> lineStack = null;
+        try {
+
             br = new BufferedReader(new FileReader(fileName));
             lineStack = new ArrayList<String>();
             String line;
-            while((line=br.readLine())!=null){
+            while ((line = br.readLine()) != null) {
                 //We stack the lines readed in an array
                 lineStack.add(line);
             }
-        }catch(FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
-        }finally{
-            if(br!=null){
-                try{
+        } finally {
+            if (br != null) {
+                try {
                     br.close();
                     //We parse the file if everything went fine
-                    plateau=parser(lineStack, tour);
-                }catch(IOException e){
+                    plateau = parser(lineStack, tour);
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
-                
+
         return plateau;
     }
-    
-    
-    private Goban parser(ArrayList<String> lineStack, int tour){
-        Goban plateau = new Goban(height,width);
-        int i=0;
-        int j =0;
+
+    private Goban parser(ArrayList<String> lineStack, int tour) {
+        Goban plateau = new Goban(height, width);
+        int i = 0;
+        int j = 0;
         ArrayList<String> goban = new ArrayList<String>();
-        
-        for (String s : lineStack){
-            if (s.equals("tour")){
+
+        for (String s : lineStack) {
+            if (s.equals("tour")) {
                 i++;
             }
-            if (i==tour){
+            if (i == tour) {
                 goban.add(s);
             }
         }
-        
-        i=0;
-        j=0;
-        for (String s: goban){
-            for(String s2 : s.split(" ")){
-                plateau.poserPierre(new Point2D(i,j), s2.equals("B"));
+
+        i = 0;
+        j = 0;
+        for (String s : goban) {
+            for (String s2 : s.split(" ")) {
+                plateau.poserPierre(new Point2D(i, j), s2.equals("B"));
                 i++;
             }
             j++;
         }
-        
+
         return plateau;
     }
 }

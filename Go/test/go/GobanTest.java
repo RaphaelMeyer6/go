@@ -167,42 +167,14 @@ public class GobanTest {
     @Test
     public void testVoisins() {
         System.out.println("voisins");
-        Point2D p = new Point2D(0,0);
-        Point2D p1 = new Point2D(0,1);
-        Point2D p2 = new Point2D(1,1);
-        Point2D p3 = new Point2D(0,2);
-        Point2D p4 = new Point2D(3,3);
-        Goban instance = new Goban(5,5);
-        Pierre[][] listePierres = new Pierre[5][5];
-        Pierre pi = new Pierre(true,p);
-        Pierre pi1 = new Pierre (true,p1);
-        Pierre pi2 = new Pierre(false,p2);
-        Pierre pi3 = new Pierre (false,p3);
-        Pierre pi4 = new Pierre (false,p4);
-        listePierres[0][0] = pi;
-        listePierres[0][1] = pi1;
-        listePierres[1][1] = pi2;
-        listePierres[0][2] = pi3;
-        listePierres[3][3] = pi4;
-        instance.setListePierres(listePierres);
-        
-        
-        
-        ArrayList<Pierre> expResult = new ArrayList();
-        expResult.add(pi1);
-        ArrayList<Pierre> result = instance.voisins(pi, true);
+        Pierre pi = null;
+        boolean blanc = false;
+        Goban instance = null;
+        ArrayList<Pierre> expResult = null;
+        ArrayList<Pierre> result = instance.voisins(pi, blanc);
         assertEquals(expResult, result);
-        
-        expResult.clear();
-        expResult.add(pi3);        
-        expResult.add(pi2);
-        result = instance.voisins(pi1, false);
-        assertEquals(expResult, result);
-        
-        expResult.clear();
-        result = instance.voisins(pi4, true);
-        assertEquals(expResult, result);
-
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
@@ -238,17 +210,13 @@ public class GobanTest {
     @Test
     public void testCapture() {
         System.out.println("capture");
-        Pierre p = new Pierre (true,3,2);
-        Pierre listePierres[][] = new Pierre[10][10];
-        Goban instance = new Goban(10,10);
-        listePierres[p.getPosition().getX()][p.getPosition().getY()] = p;
+        Pierre p = null;
+        Goban instance = null;
         boolean expResult = false;
         boolean result = instance.capture(p);
         assertEquals(expResult, result);
-        
-        Pierre ennemi = new Pierre (false,3,3);
-        listePierres[ennemi.getPosition().getX()][ennemi.getPosition().getY()] = ennemi;
-        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
@@ -257,11 +225,44 @@ public class GobanTest {
     @Test
     public void testCaptureGroupe() {
         System.out.println("captureGroupe");
-        Groupe g = null;
-        Goban instance = null;
-        instance.captureGroupe(g);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //Capture d'un groupe de deux pierres adjacentes
+        boolean result=false;
+        Point2D p1=new Point2D(0,0);
+        Point2D p2=new Point2D(0,1);
+        Point2D p3=new Point2D(0,3);
+        Goban instance = new Goban(10,10);
+        instance.poserPierre(p1, true);
+        instance.poserPierre(p2, true);
+        boolean bool=instance.seSuicide(instance.getListePierres()[0][1]);
+        instance.poserPierre(p3, true);
+        Groupe groupe1=instance.getListePierres()[0][0].getGroupe();
+        instance.captureGroupe(groupe1);
+        if(instance.getBlanchesCapturees()==2){
+            if (instance.getListePierres()[0][0]==null && instance.getListePierres()[0][1]==null){
+                result=true;
+            }
+        }
+        boolean expResult = true;
+        assertEquals(expResult, result);
+        //Capture d'un groupe consitué d'une seule pierre
+        result=false;
+        p1=new Point2D(0,0);
+        p2=new Point2D(0,1);
+        p3=new Point2D(0,3);
+        instance = new Goban(10,10);
+        instance.poserPierre(p1, true);
+        instance.poserPierre(p2, false);
+        bool=instance.seSuicide(instance.getListePierres()[0][1]);
+        instance.poserPierre(p3, true);
+        groupe1=instance.getListePierres()[0][0].getGroupe();
+        instance.captureGroupe(groupe1);
+        if(instance.getBlanchesCapturees()==1){
+            if (instance.getListePierres()[0][0]==null){
+                result=true;
+            }
+        }
+        expResult = true;
+        assertEquals(expResult, result);
     }
 
     /**
@@ -333,6 +334,38 @@ public class GobanTest {
         instance.poserPierre(p3, true);
         instance.poserPierre(p4, true);
         expResult = false;
+        result = instance.seSuicide(pi1);
+        assertEquals(expResult, result);
+        //Test d'une pierre au milieu du plateau et entourées de pièces noires
+        p1=new Point2D(1,1);
+        p2=new Point2D(1,0);
+        p3=new Point2D(1,2);
+        p4=new Point2D(0,1);
+        Point2D p5=new Point2D(2,1);
+        pi1 = new Pierre(false,p1);
+        pierres=new Pierre[10][10];
+        instance = new Goban(10,10,pierres);
+        instance.poserPierre(p2, false);
+        instance.poserPierre(p3, true);
+        instance.poserPierre(p4, true);
+        instance.poserPierre(p5, true);
+        expResult = false;
+        result = instance.seSuicide(pi1);
+        assertEquals(expResult, result);
+        //Test d'une pierre au milieu du plateau et entourées de pièces noires
+        p1=new Point2D(1,1);
+        p2=new Point2D(1,0);
+        p3=new Point2D(1,2);
+        p4=new Point2D(0,1);
+        p5=new Point2D(2,1);
+        pi1 = new Pierre(false,p1);
+        pierres=new Pierre[10][10];
+        instance = new Goban(10,10,pierres);
+        instance.poserPierre(p2, true);
+        instance.poserPierre(p3, true);
+        instance.poserPierre(p4, true);
+        instance.poserPierre(p5, true);
+        expResult = true;
         result = instance.seSuicide(pi1);
         assertEquals(expResult, result);
     }
