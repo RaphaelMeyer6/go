@@ -59,7 +59,7 @@ public class Jeu {
             passesJ2++;
             }else {
                 Pierre pierre = new Pierre(joueur,point);
-                plateau.ajouterGroupe(pierre);
+                plateau.poserPierre(pierre.getPosition(),pierre.isBlanc());
                 passesJ2=0;
             }
         }

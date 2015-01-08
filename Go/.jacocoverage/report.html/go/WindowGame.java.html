@@ -13,7 +13,7 @@ import javax.swing.JFrame;
  * @author Akatosh
  */
 public class WindowGame extends JFrame{
-    private Goban plateau;
+    private Jeu game;
     private ContentWindowGame content;
     
     /**
@@ -28,25 +28,25 @@ public class WindowGame extends JFrame{
 <span class="nc" id="L28">        this.setResizable(false);</span>
 <span class="nc" id="L29">    }</span>
     /**
-     * Constructor of the window with size and Goban
+     * Constructor of the window with size and game
      * @param width the window width
      * @param height the window height
-     * @param plateau the Goban
+     * @param game the game
      */
-    public WindowGame(int width, int height, Goban plateau){
+    public WindowGame(int width, int height, Jeu game){
 <span class="nc" id="L37">        this(width,height);</span>
-<span class="nc" id="L38">        this.plateau=plateau;</span>
-<span class="nc" id="L39">        this.content=new ContentWindowGame(width,height,plateau);</span>
+<span class="nc" id="L38">        this.game=game;</span>
+<span class="nc" id="L39">        this.content=new ContentWindowGame(width,height,game);</span>
 <span class="nc" id="L40">        this.setContentPane(content);</span>
 <span class="nc" id="L41">    }</span>
 
-    public Goban getPlateau() {
-<span class="nc" id="L44">        return plateau;</span>
+    public Jeu getGame() {
+<span class="nc" id="L44">        return game;</span>
     }
 
-    public void setPlateau(Goban plateau) {
-<span class="nc" id="L48">        this.plateau = plateau;</span>
-<span class="nc" id="L49">        this.content=new ContentWindowGame(this.getWidth(),this.getHeight(),plateau);</span>
+    public void setGame(Jeu game) {
+<span class="nc" id="L48">        this.game = game;</span>
+<span class="nc" id="L49">        this.content=new ContentWindowGame(this.getWidth(),this.getHeight(),game);</span>
 <span class="nc" id="L50">        this.setContentPane(content);</span>
 <span class="nc" id="L51">    }</span>
     

@@ -88,51 +88,52 @@ public class Goban {
 
     public boolean intersectionLibre(Point2D p) {
 <span class="fc" id="L90">        boolean estLibre = true;</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (listePierres[p.getX()][p.getY()] != null) {</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (horsPlateau(p)){</span>
 <span class="fc" id="L92">            estLibre = false;</span>
         }
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (horsPlateau(p)){</span>
-<span class="nc" id="L95">            estLibre = false;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        else if(listePierres[p.getX()][p.getY()] != null){</span>
+<span class="fc" id="L95">            estLibre = false;</span>
         }
-<span class="fc" id="L97">        return estLibre;</span>
+        
+<span class="fc" id="L98">        return estLibre;</span>
     }
 
     public boolean horsPlateau(Point2D p) {
-<span class="pc bpc" id="L101" title="1 of 8 branches missed.">        return (p.getX() &lt; 0) || (p.getX() &gt;= width) || (p.getY() &lt; 0) || (p.getY() &gt;= height);</span>
+<span class="pc bpc" id="L102" title="1 of 8 branches missed.">        return (p.getX() &lt; 0) || (p.getX() &gt;= width) || (p.getY() &lt; 0) || (p.getY() &gt;= height);</span>
     }
 
     public boolean bordPlateau(Point2D p) {
-<span class="pc bpc" id="L105" title="1 of 8 branches missed.">        return (p.getX() == 0) || (p.getX() == width - 1) || (p.getY() == 0) || (p.getY() == height - 1);</span>
+<span class="pc bpc" id="L106" title="1 of 8 branches missed.">        return (p.getX() == 0) || (p.getX() == width - 1) || (p.getY() == 0) || (p.getY() == height - 1);</span>
     }
 
     public boolean coinPlateau(Point2D p) {
-<span class="pc bpc" id="L109" title="4 of 12 branches missed.">        return ((p.getX() == 0) &amp;&amp; ((p.getY() == 0) || (p.getY() == height - 1))) || ((p.getX() == width - 1) &amp;&amp; ((p.getY() == 0) || (p.getY() == height - 1)));</span>
+<span class="pc bpc" id="L110" title="4 of 12 branches missed.">        return ((p.getX() == 0) &amp;&amp; ((p.getY() == 0) || (p.getY() == height - 1))) || ((p.getX() == width - 1) &amp;&amp; ((p.getY() == 0) || (p.getY() == height - 1)));</span>
     }
 
     public int nombreLibertes(Groupe g) {
-<span class="fc" id="L113">        int lib = 0;</span>
-<span class="fc" id="L114">        ArrayList&lt;Point2D&gt; listeLibertes = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L115" title="All 2 branches covered.">        for (Pierre pi : g.getPierres()) {</span>
-<span class="fc" id="L116">            ArrayList&lt;Point2D&gt; listeAdjacents = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L117">            Point2D nord = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() + 1);</span>
-<span class="fc" id="L118">            Point2D sud = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() - 1);</span>
-<span class="fc" id="L119">            Point2D est = new Point2D(pi.getPosition().getX() + 1, pi.getPosition().getY());</span>
-<span class="fc" id="L120">            Point2D ouest = new Point2D(pi.getPosition().getX() - 1, pi.getPosition().getY());</span>
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">            if (!horsPlateau(nord))listeAdjacents.add(nord);</span>
-<span class="fc bfc" id="L122" title="All 2 branches covered.">            if (!horsPlateau(sud))listeAdjacents.add(sud);</span>
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">            if (!horsPlateau(est))listeAdjacents.add(est);</span>
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">            if (!horsPlateau(ouest))listeAdjacents.add(ouest);</span>
+<span class="fc" id="L114">        int lib = 0;</span>
+<span class="fc" id="L115">        ArrayList&lt;Point2D&gt; listeLibertes = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        for (Pierre pi : g.getPierres()) {</span>
+<span class="fc" id="L117">            ArrayList&lt;Point2D&gt; listeAdjacents = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L118">            Point2D nord = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() + 1);</span>
+<span class="fc" id="L119">            Point2D sud = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() - 1);</span>
+<span class="fc" id="L120">            Point2D est = new Point2D(pi.getPosition().getX() + 1, pi.getPosition().getY());</span>
+<span class="fc" id="L121">            Point2D ouest = new Point2D(pi.getPosition().getX() - 1, pi.getPosition().getY());</span>
+<span class="fc" id="L122">            listeAdjacents.add(nord);</span>
+<span class="fc" id="L123">            listeAdjacents.add(sud);</span>
+<span class="fc" id="L124">            listeAdjacents.add(est);</span>
+<span class="fc" id="L125">            listeAdjacents.add(ouest);</span>
 
-<span class="fc bfc" id="L126" title="All 2 branches covered.">            for (Point2D p : listeAdjacents) {</span>
-<span class="pc bpc" id="L127" title="3 of 6 branches missed.">                if (!horsPlateau(p) &amp;&amp; intersectionLibre(p) &amp;&amp; !listeLibertes.contains(p)) {</span>
-<span class="fc" id="L128">                    listeLibertes.add(p);</span>
-<span class="fc" id="L129">                    lib++;</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">            for (Point2D p : listeAdjacents) {</span>
+<span class="pc bpc" id="L128" title="2 of 6 branches missed.">                if (!horsPlateau(p) &amp;&amp; intersectionLibre(p) &amp;&amp; !listeLibertes.contains(p)) {</span>
+<span class="fc" id="L129">                    listeLibertes.add(p);</span>
+<span class="fc" id="L130">                    lib++;</span>
                 }
-<span class="fc" id="L131">            }</span>
-<span class="fc" id="L132">        }</span>
+<span class="fc" id="L132">            }</span>
+<span class="fc" id="L133">        }</span>
 
 
-<span class="fc" id="L135">        return lib;</span>
+<span class="fc" id="L136">        return lib;</span>
     }
 
     /**
@@ -143,42 +144,45 @@ public class Goban {
      * @return
      */
     public ArrayList&lt;Pierre&gt; voisins(Pierre pi, boolean blanc) {
-<span class="fc" id="L146">        ArrayList&lt;Point2D&gt; listeAdjacents = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L147">        ArrayList&lt;Pierre&gt; listeVoisins = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L148">        Point2D nord = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() + 1);</span>
-<span class="fc" id="L149">        Point2D sud = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() - 1);</span>
-<span class="fc" id="L150">        Point2D est = new Point2D(pi.getPosition().getX() + 1, pi.getPosition().getY());</span>
-<span class="fc" id="L151">        Point2D ouest = new Point2D(pi.getPosition().getX() - 1, pi.getPosition().getY());</span>
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">        if (!horsPlateau(nord))listeAdjacents.add(nord);</span>
-<span class="fc bfc" id="L153" title="All 2 branches covered.">        if (!horsPlateau(sud))listeAdjacents.add(sud);</span>
-<span class="pc bpc" id="L154" title="1 of 2 branches missed.">        if (!horsPlateau(est))listeAdjacents.add(est);</span>
-<span class="fc bfc" id="L155" title="All 2 branches covered.">        if (!horsPlateau(ouest))listeAdjacents.add(ouest);</span>
+<span class="fc" id="L147">        ArrayList&lt;Point2D&gt; listeAdjacents = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L148">        ArrayList&lt;Pierre&gt; listeVoisins = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L149">        Point2D nord = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() + 1);</span>
+<span class="fc" id="L150">        Point2D sud = new Point2D(pi.getPosition().getX(), pi.getPosition().getY() - 1);</span>
+<span class="fc" id="L151">        Point2D est = new Point2D(pi.getPosition().getX() + 1, pi.getPosition().getY());</span>
+<span class="fc" id="L152">        Point2D ouest = new Point2D(pi.getPosition().getX() - 1, pi.getPosition().getY());</span>
+<span class="fc" id="L153">        listeAdjacents.add(nord);</span>
+<span class="fc" id="L154">        listeAdjacents.add(sud);</span>
+<span class="fc" id="L155">        listeAdjacents.add(est);</span>
+<span class="fc" id="L156">        listeAdjacents.add(ouest);</span>
 
-<span class="fc bfc" id="L157" title="All 2 branches covered.">        for (Point2D p : listeAdjacents) {</span>
-<span class="fc bfc" id="L158" title="All 2 branches covered.">            if (!intersectionLibre(p)</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">                    &amp;&amp; listePierres[p.getX()][p.getY()].isBlanc() == blanc) {</span>
-<span class="fc" id="L160">                listeVoisins.add(listePierres[p.getX()][p.getY()]);</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        for (Point2D p : listeAdjacents) {</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">            if(!intersectionLibre(p)){</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">                if (!horsPlateau(p)</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">                        &amp;&amp; listePierres[p.getX()][p.getY()].isBlanc() == blanc) {</span>
+<span class="fc" id="L162">                    listeVoisins.add(listePierres[p.getX()][p.getY()]);</span>
+            }    
             }
-<span class="fc" id="L162">        }</span>
-<span class="fc" id="L163">        return listeVoisins;</span>
+
+<span class="fc" id="L166">        }</span>
+<span class="fc" id="L167">        return listeVoisins;</span>
     }
 
     public void ajouterGroupe(Pierre pi) {
-<span class="fc" id="L167">    }</span>
+<span class="fc" id="L171">    }</span>
     
     public void poserPierre(Point2D p, boolean blanc) {
-<span class="fc" id="L170">        Pierre pierre = new Pierre(blanc, p);</span>
-<span class="fc" id="L171">        this.listePierres[p.getX()][p.getY()] = pierre;</span>
+<span class="fc" id="L174">        Pierre pierre = new Pierre(blanc, p);</span>
+<span class="fc" id="L175">        this.listePierres[p.getX()][p.getY()] = pierre;</span>
 
-<span class="pc bpc" id="L173" title="1 of 2 branches missed.">        if (voisins(pierre, pierre.isBlanc()).isEmpty()) {</span>
-<span class="fc" id="L174">            ArrayList&lt;Pierre&gt; listeUnePierre = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L175">            listeUnePierre.add(pierre);</span>
-<span class="fc" id="L176">            pierre.setGroupe(new Groupe(listeUnePierre));</span>
-<span class="fc" id="L177">        }</span>
-<span class="nc bnc" id="L178" title="All 2 branches missed.">        else for (Pierre pi : voisins(pierre,pierre.isBlanc())){</span>
-<span class="nc" id="L179">            pierre.getGroupe().fusionnerGroupes(pi.getGroupe());</span>
-<span class="nc" id="L180">        }</span>
-<span class="fc" id="L181">    }</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">        if (voisins(pierre, pierre.isBlanc()).isEmpty()) {</span>
+<span class="fc" id="L178">            ArrayList&lt;Pierre&gt; listeUnePierre = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L179">            listeUnePierre.add(pierre);</span>
+<span class="fc" id="L180">            pierre.setGroupe(new Groupe(listeUnePierre));</span>
+<span class="fc" id="L181">        }</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">        else for (Pierre pi : voisins(pierre,pierre.isBlanc())){</span>
+<span class="nc" id="L183">            pierre.getGroupe().fusionnerGroupes(pi.getGroupe());</span>
+<span class="nc" id="L184">        }</span>
+<span class="fc" id="L185">    }</span>
     
      /**
      * Capture des groupes adverses 
@@ -188,19 +192,19 @@ public class Goban {
      */
     public boolean capture(Pierre p){
         
-<span class="nc" id="L191">        boolean adversairesCaptures = false;</span>
-<span class="nc" id="L192">        ArrayList&lt;Pierre&gt; voisinsAdverses = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L193" title="All 2 branches missed.">        voisinsAdverses = voisins(p,!p.isBlanc());</span>
-<span class="nc bnc" id="L194" title="All 2 branches missed.">        if(!voisinsAdverses.isEmpty()){</span>
-<span class="nc bnc" id="L195" title="All 2 branches missed.">            for(Pierre voisinAdverse : voisinsAdverses){</span>
-<span class="nc bnc" id="L196" title="All 2 branches missed.">                if(this.nombreLibertes(voisinAdverse.getGroupe())==0)</span>
+<span class="fc" id="L195">        boolean adversairesCaptures = false;</span>
+<span class="fc" id="L196">        ArrayList&lt;Pierre&gt; voisinsAdverses = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">        voisinsAdverses = voisins(p,!p.isBlanc());</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">        if(!voisinsAdverses.isEmpty()){</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">            for(Pierre voisinAdverse : voisinsAdverses){</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">                if(this.nombreLibertes(voisinAdverse.getGroupe())==0)</span>
                 {
-<span class="nc" id="L198">                    this.captureGroupe(voisinAdverse.getGroupe());</span>
-<span class="nc" id="L199">                    adversairesCaptures = true;</span>
+<span class="nc" id="L202">                    this.captureGroupe(voisinAdverse.getGroupe());</span>
+<span class="nc" id="L203">                    adversairesCaptures = true;</span>
                 }
-<span class="nc" id="L201">            }</span>
+<span class="nc" id="L205">            }</span>
         }
-<span class="nc" id="L203">        return adversairesCaptures;</span>
+<span class="fc" id="L207">        return adversairesCaptures;</span>
     }
     
     /**
@@ -209,133 +213,133 @@ public class Goban {
      */
     public void captureGroupe(Groupe g){
         
-<span class="nc" id="L212">        ArrayList&lt;Pierre&gt; pierres = g.getPierres();</span>
-<span class="nc bnc" id="L213" title="All 2 branches missed.">        if(pierres.get(0).isBlanc()){</span>
-<span class="nc" id="L214">            this.blanchesCapturees = this.blanchesCapturees + pierres.size();</span>
+<span class="nc" id="L216">        ArrayList&lt;Pierre&gt; pierres = g.getPierres();</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">        if(pierres.get(0).isBlanc()){</span>
+<span class="nc" id="L218">            this.blanchesCapturees = this.blanchesCapturees + pierres.size();</span>
         }
         else{
-<span class="nc" id="L217">            this.noiresCapturees = this.noiresCapturees+ pierres.size();</span>
+<span class="nc" id="L221">            this.noiresCapturees = this.noiresCapturees+ pierres.size();</span>
         }
-<span class="nc bnc" id="L219" title="All 2 branches missed.">        for(Pierre p : g.getPierres()){</span>
-<span class="nc" id="L220">            this.listePierres[p.getPosition().getX()][p.getPosition().getY()]</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">        for(Pierre p : g.getPierres()){</span>
+<span class="nc" id="L224">            this.listePierres[p.getPosition().getX()][p.getPosition().getY()]</span>
                     = null;
-<span class="nc" id="L222">        }</span>
-<span class="nc" id="L223">    }</span>
+<span class="nc" id="L226">        }</span>
+<span class="nc" id="L227">    }</span>
 
     public void enregistrer(String fileName) {
 
-<span class="nc" id="L227">        BufferedWriter bw = null;</span>
+<span class="nc" id="L231">        BufferedWriter bw = null;</span>
         try {
-<span class="nc" id="L229">            bw = new BufferedWriter(new FileWriter(fileName));</span>
-<span class="nc bnc" id="L230" title="All 2 branches missed.">            for (int j = 0; j &lt; this.getHeight(); j++) {</span>
-<span class="nc bnc" id="L231" title="All 2 branches missed.">                for (int i = 0; i &lt; this.getWidth(); i++) {</span>
-<span class="nc bnc" id="L232" title="All 2 branches missed.">                    if (listePierres[i][j] == null) {</span>
-<span class="nc" id="L233">                        bw.write(&quot;X &quot;);</span>
-<span class="nc bnc" id="L234" title="All 2 branches missed.">                    } else if (listePierres[i][j].isBlanc()) {</span>
-<span class="nc" id="L235">                        bw.write(&quot;B &quot;);</span>
+<span class="nc" id="L233">            bw = new BufferedWriter(new FileWriter(fileName));</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">            for (int j = 0; j &lt; this.getHeight(); j++) {</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">                for (int i = 0; i &lt; this.getWidth(); i++) {</span>
+<span class="nc bnc" id="L236" title="All 2 branches missed.">                    if (listePierres[i][j] == null) {</span>
+<span class="nc" id="L237">                        bw.write(&quot;X &quot;);</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">                    } else if (listePierres[i][j].isBlanc()) {</span>
+<span class="nc" id="L239">                        bw.write(&quot;B &quot;);</span>
                     } else {
-<span class="nc" id="L237">                        bw.write(&quot;N &quot;);</span>
+<span class="nc" id="L241">                        bw.write(&quot;N &quot;);</span>
                     }
                 }
-<span class="nc" id="L240">                bw.newLine();</span>
+<span class="nc" id="L244">                bw.newLine();</span>
             }
-<span class="nc" id="L242">        } catch (FileNotFoundException e) {</span>
-<span class="nc" id="L243">            e.printStackTrace();</span>
-<span class="nc" id="L244">        } catch (IOException e) {</span>
-<span class="nc" id="L245">            e.printStackTrace();</span>
+<span class="nc" id="L246">        } catch (FileNotFoundException e) {</span>
+<span class="nc" id="L247">            e.printStackTrace();</span>
+<span class="nc" id="L248">        } catch (IOException e) {</span>
+<span class="nc" id="L249">            e.printStackTrace();</span>
         } finally {
-<span class="nc bnc" id="L247" title="All 8 branches missed.">            if (bw != null) {</span>
+<span class="nc bnc" id="L251" title="All 8 branches missed.">            if (bw != null) {</span>
                 try {
-<span class="nc" id="L249">                    bw.close();</span>
-<span class="nc" id="L250">                } catch (IOException e) {</span>
-<span class="nc" id="L251">                    e.printStackTrace();</span>
-<span class="nc" id="L252">                }</span>
+<span class="nc" id="L253">                    bw.close();</span>
+<span class="nc" id="L254">                } catch (IOException e) {</span>
+<span class="nc" id="L255">                    e.printStackTrace();</span>
+<span class="nc" id="L256">                }</span>
             }
         }
 
-<span class="nc" id="L256">    }</span>
+<span class="nc" id="L260">    }</span>
 
     public boolean seSuicide(Pierre pi) {
 
-<span class="fc" id="L260">        boolean ret = true;</span>
-<span class="pc bpc" id="L261" title="2 of 4 branches missed.">        if ((voisins(pi, !pi.isBlanc()).size() == 4)</span>
-<span class="pc bpc" id="L262" title="2 of 6 branches missed.">                || ((voisins(pi, !pi.isBlanc()).size() == 3) &amp;&amp; (bordPlateau(pi.getPosition())))</span>
-<span class="pc bpc" id="L263" title="1 of 6 branches missed.">                || ((voisins(pi, !pi.isBlanc()).size() == 2) &amp;&amp; (coinPlateau(pi.getPosition())))) {</span>
-<span class="fc" id="L264">            return true;</span>
-<span class="pc bpc" id="L265" title="1 of 2 branches missed.">        } else if ((voisins(pi, pi.isBlanc()).isEmpty())) {</span>
-<span class="nc" id="L266">            return false;</span>
+<span class="fc" id="L264">        boolean ret = true;</span>
+<span class="pc bpc" id="L265" title="2 of 4 branches missed.">        if ((voisins(pi, !pi.isBlanc()).size() == 4)</span>
+<span class="pc bpc" id="L266" title="2 of 6 branches missed.">                || ((voisins(pi, !pi.isBlanc()).size() == 3) &amp;&amp; (bordPlateau(pi.getPosition())))</span>
+<span class="pc bpc" id="L267" title="1 of 6 branches missed.">                || ((voisins(pi, !pi.isBlanc()).size() == 2) &amp;&amp; (coinPlateau(pi.getPosition())))) {</span>
+<span class="fc" id="L268">            return true;</span>
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">        } else if ((voisins(pi, pi.isBlanc()).isEmpty())) {</span>
+<span class="nc" id="L270">            return false;</span>
         } else {
-<span class="fc bfc" id="L268" title="All 2 branches covered.">            for (Pierre pierre : voisins(pi, pi.isBlanc())) {</span>
-<span class="pc bpc" id="L269" title="1 of 2 branches missed.">                if (nombreLibertes(pierre.getGroupe()) &gt; 1) {</span>
-<span class="fc" id="L270">                    ret = false;</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">            for (Pierre pierre : voisins(pi, pi.isBlanc())) {</span>
+<span class="pc bpc" id="L273" title="1 of 2 branches missed.">                if (nombreLibertes(pierre.getGroupe()) &gt; 1) {</span>
+<span class="fc" id="L274">                    ret = false;</span>
                 }
-<span class="fc" id="L272">            }</span>
+<span class="fc" id="L276">            }</span>
         }
 
-<span class="fc" id="L275">        return ret;</span>
+<span class="fc" id="L279">        return ret;</span>
 
     }
     
     public Goban trouverGoban(String fileName, int tour){
-<span class="nc" id="L280">        Goban plateau = new Goban(height,width);</span>
+<span class="nc" id="L284">        Goban plateau = new Goban(height,width);</span>
         
-<span class="nc" id="L282">        BufferedReader br=null;</span>
-<span class="nc" id="L283">        ArrayList&lt;String&gt; lineStack =null; </span>
+<span class="nc" id="L286">        BufferedReader br=null;</span>
+<span class="nc" id="L287">        ArrayList&lt;String&gt; lineStack =null; </span>
         try{
             
-<span class="nc" id="L286">            br = new BufferedReader(new FileReader(fileName));</span>
-<span class="nc" id="L287">            lineStack = new ArrayList&lt;String&gt;();</span>
+<span class="nc" id="L290">            br = new BufferedReader(new FileReader(fileName));</span>
+<span class="nc" id="L291">            lineStack = new ArrayList&lt;String&gt;();</span>
             String line;
-<span class="nc bnc" id="L289" title="All 2 branches missed.">            while((line=br.readLine())!=null){</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">            while((line=br.readLine())!=null){</span>
                 //We stack the lines readed in an array
-<span class="nc" id="L291">                lineStack.add(line);</span>
+<span class="nc" id="L295">                lineStack.add(line);</span>
             }
-<span class="nc" id="L293">        }catch(FileNotFoundException e){</span>
-<span class="nc" id="L294">            e.printStackTrace();</span>
-<span class="nc" id="L295">        }catch (IOException e){</span>
-<span class="nc" id="L296">            e.printStackTrace();</span>
+<span class="nc" id="L297">        }catch(FileNotFoundException e){</span>
+<span class="nc" id="L298">            e.printStackTrace();</span>
+<span class="nc" id="L299">        }catch (IOException e){</span>
+<span class="nc" id="L300">            e.printStackTrace();</span>
         }finally{
-<span class="nc bnc" id="L298" title="All 8 branches missed.">            if(br!=null){</span>
+<span class="nc bnc" id="L302" title="All 8 branches missed.">            if(br!=null){</span>
                 try{
-<span class="nc" id="L300">                    br.close();</span>
+<span class="nc" id="L304">                    br.close();</span>
                     //We parse the file if everything went fine
-<span class="nc" id="L302">                    plateau=parser(lineStack, tour);</span>
-<span class="nc" id="L303">                }catch(IOException e){</span>
-<span class="nc" id="L304">                    e.printStackTrace();</span>
-<span class="nc" id="L305">                }</span>
+<span class="nc" id="L306">                    plateau=parser(lineStack, tour);</span>
+<span class="nc" id="L307">                }catch(IOException e){</span>
+<span class="nc" id="L308">                    e.printStackTrace();</span>
+<span class="nc" id="L309">                }</span>
             }
         }
                 
-<span class="nc" id="L309">        return plateau;</span>
+<span class="nc" id="L313">        return plateau;</span>
     }
     
     
     private Goban parser(ArrayList&lt;String&gt; lineStack, int tour){
-<span class="nc" id="L314">        Goban plateau = new Goban(height,width);</span>
-<span class="nc" id="L315">        int i=0;</span>
-<span class="nc" id="L316">        int j =0;</span>
-<span class="nc" id="L317">        ArrayList&lt;String&gt; goban = new ArrayList&lt;String&gt;();</span>
+<span class="nc" id="L318">        Goban plateau = new Goban(height,width);</span>
+<span class="nc" id="L319">        int i=0;</span>
+<span class="nc" id="L320">        int j =0;</span>
+<span class="nc" id="L321">        ArrayList&lt;String&gt; goban = new ArrayList&lt;String&gt;();</span>
         
-<span class="nc bnc" id="L319" title="All 2 branches missed.">        for (String s : lineStack){</span>
-<span class="nc bnc" id="L320" title="All 2 branches missed.">            if (s.equals(&quot;tour&quot;)){</span>
-<span class="nc" id="L321">                i++;</span>
+<span class="nc bnc" id="L323" title="All 2 branches missed.">        for (String s : lineStack){</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">            if (s.equals(&quot;tour&quot;)){</span>
+<span class="nc" id="L325">                i++;</span>
             }
-<span class="nc bnc" id="L323" title="All 2 branches missed.">            if (i==tour){</span>
-<span class="nc" id="L324">                goban.add(s);</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">            if (i==tour){</span>
+<span class="nc" id="L328">                goban.add(s);</span>
             }
-<span class="nc" id="L326">        }</span>
+<span class="nc" id="L330">        }</span>
         
-<span class="nc" id="L328">        i=0;</span>
-<span class="nc" id="L329">        j=0;</span>
-<span class="nc bnc" id="L330" title="All 2 branches missed.">        for (String s: goban){</span>
-<span class="nc bnc" id="L331" title="All 2 branches missed.">            for(String s2 : s.split(&quot; &quot;)){</span>
-<span class="nc" id="L332">                plateau.poserPierre(new Point2D(i,j), s2.equals(&quot;B&quot;));</span>
-<span class="nc" id="L333">                i++;</span>
+<span class="nc" id="L332">        i=0;</span>
+<span class="nc" id="L333">        j=0;</span>
+<span class="nc bnc" id="L334" title="All 2 branches missed.">        for (String s: goban){</span>
+<span class="nc bnc" id="L335" title="All 2 branches missed.">            for(String s2 : s.split(&quot; &quot;)){</span>
+<span class="nc" id="L336">                plateau.poserPierre(new Point2D(i,j), s2.equals(&quot;B&quot;));</span>
+<span class="nc" id="L337">                i++;</span>
             }
-<span class="nc" id="L335">            j++;</span>
-<span class="nc" id="L336">        }</span>
+<span class="nc" id="L339">            j++;</span>
+<span class="nc" id="L340">        }</span>
         
-<span class="nc" id="L338">        return plateau;</span>
+<span class="nc" id="L342">        return plateau;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

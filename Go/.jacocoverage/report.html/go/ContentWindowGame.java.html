@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  */
 public class ContentWindowGame extends JPanel{
     
-    private Goban plateau;
+    private Jeu game;
     private int cellWidth, cellHeight;
     private ImagePierre[][] listPositions;
     
@@ -25,45 +25,39 @@ public class ContentWindowGame extends JPanel{
      * @param height the content height
      * @param plateau the Goban
      */
-<span class="nc" id="L28">    public ContentWindowGame(int width, int height, Goban plateau){</span>
-<span class="nc" id="L29">        this.plateau=plateau;</span>
-<span class="nc" id="L30">        this.listPositions=new ImagePierre[this.plateau.getWidth()][this.plateau.getHeight()];</span>
+<span class="nc" id="L28">    public ContentWindowGame(int width, int height, Jeu game){</span>
+<span class="nc" id="L29">        this.game=game;</span>
+<span class="nc" id="L30">        this.listPositions=new ImagePierre[this.game.getPlateau().getWidth()][this.game.getPlateau().getHeight()];</span>
 <span class="nc" id="L31">        this.setSize(width,height);</span>
 <span class="nc" id="L32">        this.setBackground(new Color(245,172,99));</span>
 <span class="nc" id="L33">        this.setLayout(null);</span>
-<span class="nc" id="L34">        cellWidth=(int)((double)this.getWidth()/((double)plateau.getWidth()+1));</span>
-<span class="nc" id="L35">        cellHeight=(int)((double)this.getHeight()/((double)plateau.getHeight()+1));</span>
-<span class="nc bnc" id="L36" title="All 2 branches missed.">        for(int i=0;i&lt;plateau.getListePierres().length;i++){</span>
-<span class="nc bnc" id="L37" title="All 2 branches missed.">            for(int j=0;j&lt;plateau.getListePierres().length;j++){</span>
-<span class="nc" id="L38">                ImagePierre stone = new ImagePierre(i,j,plateau.getListePierres()[i][j],(int)((double)cellWidth/1.2),(int)((double)cellHeight/1.2));</span>
-<span class="nc" id="L39">                stone.setBounds(cellWidth/2+cellWidth*i, cellHeight/2+cellHeight*j, (int)((double)cellWidth/1.3), (int)((double)cellHeight/1.3));</span>
-<span class="nc" id="L40">                listPositions[i][j]=stone;</span>
-<span class="nc" id="L41">                this.add(stone);</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        for(int i=0;i&lt;this.game.getPlateau().getWidth();i++){</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">            for(int j=0;j&lt;this.game.getPlateau().getHeight();j++){</span>
+<span class="nc" id="L36">                listPositions[i][j]=new ImagePierre(0,0,game.getPlateau().getListePierres()[i][j],0,0,this.game,new Point2D(i,j));</span>
+<span class="nc" id="L37">                this.add(listPositions[i][j]);</span>
             }
         }
-<span class="nc" id="L44">    }</span>
+<span class="nc" id="L40">    }</span>
     /**
      * Paint the lines, background of the Goban and the stones that are in the Goban
      * @param g graphic object for override
      */
     @Override
     public void paintComponent (Graphics g){
-<span class="nc" id="L51">        super.paintComponent(g);</span>
-<span class="nc" id="L52">        cellWidth=(int)((double)this.getWidth()/((double)plateau.getWidth()+1));</span>
-<span class="nc" id="L53">        cellHeight=(int)((double)this.getHeight()/((double)plateau.getHeight()+1));</span>
-<span class="nc bnc" id="L54" title="All 2 branches missed.">        for(int i=1;i&lt;plateau.getWidth()+1;i++){</span>
-<span class="nc" id="L55">            g.setColor(Color.BLACK);</span>
-<span class="nc" id="L56">            g.drawLine(i*cellWidth,cellHeight,i*cellWidth,plateau.getHeight()*cellHeight);</span>
-<span class="nc" id="L57">            g.drawLine(cellWidth,i*cellHeight,plateau.getWidth()*cellWidth,i*cellHeight);</span>
+<span class="nc" id="L47">        super.paintComponent(g);</span>
+<span class="nc" id="L48">        cellWidth=(int)((double)this.getWidth()/((double)game.getPlateau().getWidth()+1));</span>
+<span class="nc" id="L49">        cellHeight=(int)((double)this.getHeight()/((double)game.getPlateau().getHeight()+1));</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        for(int i=1;i&lt;game.getPlateau().getWidth()+1;i++){</span>
+<span class="nc" id="L51">            g.setColor(Color.BLACK);</span>
+<span class="nc" id="L52">            g.drawLine(i*cellWidth,cellHeight,i*cellWidth,game.getPlateau().getHeight()*cellHeight);</span>
+<span class="nc" id="L53">            g.drawLine(cellWidth,i*cellHeight,game.getPlateau().getWidth()*cellWidth,i*cellHeight);</span>
         }
-<span class="nc bnc" id="L59" title="All 2 branches missed.">        for(int i=0;i&lt;plateau.getListePierres().length;i++){</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">            for(int j=0;j&lt;plateau.getListePierres().length;j++){</span>
-<span class="nc" id="L61">                listPositions[i][j].setBounds(cellWidth/2+cellWidth*i+(cellWidth-(int)((double)cellWidth/1.2))/2, cellHeight/2+cellHeight*j+(cellHeight-(int)((double)cellHeight/1.2))/2, (int)((double)cellWidth/1.2), (int)((double)cellHeight/1.2));</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">                if(plateau.getListePierres()[i][j]!=null){</span>
-<span class="nc" id="L63">                    listPositions[i][j].setPierre(plateau.getListePierres()[i][j]);</span>
-                }
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        for(int i=0;i&lt;game.getPlateau().getListePierres().length;i++){</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">            for(int j=0;j&lt;game.getPlateau().getListePierres().length;j++){</span>
+<span class="nc" id="L57">                listPositions[i][j].setNewBounds(cellWidth/2+cellWidth*i+(cellWidth-(int)((double)cellWidth/1.2))/2, cellHeight/2+cellHeight*j+(cellHeight-(int)((double)cellHeight/1.2))/2, (int)((double)cellWidth/1.2), (int)((double)cellHeight/1.2));</span>
+<span class="nc" id="L58">                listPositions[i][j].setPierre(game.getPlateau().getListePierres()[i][j]);</span>
             }
         }
-<span class="nc" id="L67">    }</span>
+<span class="nc" id="L61">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

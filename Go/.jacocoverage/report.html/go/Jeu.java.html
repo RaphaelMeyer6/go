@@ -6,15 +6,15 @@
  */
 public class Jeu {
     
-    Joueur j1;
-    Joueur j2;
-    Goban plateau;
-    int tour;
-    int passesJ1;
-    int passesJ2;
-<span class="pc" id="L15">    boolean partieFinie = false;</span>
-<span class="pc" id="L16">    boolean joueurJoue = false;</span>
-    Point2D action;
+    private Joueur j1;
+    private Joueur j2;
+    private Goban plateau;
+    private int tour;
+    private int passesJ1;
+    private int passesJ2;
+<span class="pc" id="L15">    private boolean partieFinie = false;</span>
+<span class="pc" id="L16">    private boolean joueurJoue = false;</span>
+    private Point2D action;
     
     
     /**
@@ -49,32 +49,29 @@ public class Jeu {
 <span class="pc bpc" id="L49" title="1 of 2 branches missed.">        if (joueur){</span>
 <span class="nc bnc" id="L50" title="All 4 branches missed.">            if ( action.getX()==-1 &amp;&amp; action.getY()==-1){</span>
 <span class="nc" id="L51">            passesJ1++;</span>
-            }
-            else {
-<span class="nc" id="L54">                Pierre pierre = new Pierre(joueur,point);</span>
-<span class="nc" id="L55">                plateau.poserPierre(pierre.getPosition(),pierre.isBlanc());</span>
-<span class="nc" id="L56">                passesJ1=0;</span>
-<span class="nc" id="L57">            }</span>
-        }
-        else{
-<span class="pc bpc" id="L60" title="3 of 4 branches missed.">            if ( action.getX()==-1 &amp;&amp; action.getY()==-1){</span>
-<span class="nc" id="L61">            passesJ2++;</span>
-            }
-            else {
-<span class="fc" id="L64">                Pierre pierre = new Pierre(joueur,point);</span>
-<span class="fc" id="L65">                plateau.ajouterGroupe(pierre);</span>
-<span class="fc" id="L66">                passesJ2=0;</span>
+            }else {
+<span class="nc" id="L53">                Pierre pierre = new Pierre(joueur,point);</span>
+<span class="nc" id="L54">                plateau.poserPierre(pierre.getPosition(),pierre.isBlanc());</span>
+<span class="nc" id="L55">                passesJ1=0;</span>
+<span class="nc" id="L56">            }</span>
+        }else{
+<span class="pc bpc" id="L58" title="3 of 4 branches missed.">            if ( action.getX()==-1 &amp;&amp; action.getY()==-1){</span>
+<span class="nc" id="L59">            passesJ2++;</span>
+            }else {
+<span class="fc" id="L61">                Pierre pierre = new Pierre(joueur,point);</span>
+<span class="fc" id="L62">                plateau.ajouterGroupe(pierre);</span>
+<span class="fc" id="L63">                passesJ2=0;</span>
             }
         }
-<span class="fc" id="L69">        partieFinie=finPartie();</span>
-<span class="fc" id="L70">    }</span>
+<span class="fc" id="L66">        partieFinie=finPartie();</span>
+<span class="fc" id="L67">    }</span>
     
     /**
      * Renvois true si les deux joueurs on passés au moins 2 tours chacun d'afilé
      * @return 
      */
     public boolean finPartie(){
-<span class="fc bfc" id="L77" title="All 4 branches covered.">        return ((passesJ1&gt;=2)&amp;&amp;(passesJ2&gt;=2));</span>
+<span class="fc bfc" id="L74" title="All 4 branches covered.">        return (passesJ1&gt;=2)&amp;&amp;(passesJ2&gt;=2);</span>
     }
     
     /**
@@ -83,8 +80,33 @@ public class Jeu {
      * @return 
      */
     public boolean getJoueurJoue(){
-<span class="nc" id="L86">        return this.joueurJoue;</span>
+<span class="fc" id="L83">        return this.joueurJoue;</span>
     }
+    /**
+     * Renvoie le plateau de jeu
+     * @return le goban
+     */
+    public Goban getPlateau(){
+<span class="nc" id="L90">        return this.plateau;</span>
+    }
+
+    public int getPassesJ1() {
+<span class="fc" id="L94">        return passesJ1;</span>
+    }
+
+    public int getPassesJ2() {
+<span class="nc" id="L98">        return passesJ2;</span>
+    }
+
+    public void setPassesJ1(int passesJ1) {
+<span class="fc" id="L102">        this.passesJ1 = passesJ1;</span>
+<span class="fc" id="L103">    }</span>
+
+    public void setPassesJ2(int passesJ2) {
+<span class="fc" id="L106">        this.passesJ2 = passesJ2;</span>
+<span class="fc" id="L107">    }</span>
+    
+    
     
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>
