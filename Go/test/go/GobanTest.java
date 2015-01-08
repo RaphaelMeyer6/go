@@ -67,13 +67,24 @@ public class GobanTest {
     @Test
     public void testHorsPlateau() {
         System.out.println("horsPlateau");
-        Point2D p = null;
-        Goban instance = null;
-        boolean expResult = false;
+        Point2D p = new Point2D(-1,1);
+        Point2D p1 = new Point2D(6,5);
+        Point2D p2 = new Point2D(5,6);
+        Point2D p3 = new Point2D(2,2);
+        Goban instance = new Goban(5,5);
+        boolean expResult = true;
         boolean result = instance.horsPlateau(p);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        result = instance.horsPlateau(p1);
+        assertEquals(expResult, result);        
+        
+        result = instance.horsPlateau(p2);
+        assertEquals(expResult, result);       
+        
+        expResult = false;
+        result = instance.horsPlateau(p3);
+        assertEquals(expResult, result);  
     }
 
     /**
