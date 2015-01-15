@@ -85,5 +85,19 @@ public class Jeu {
     public boolean getJoueurJoue(){
         return this.joueurJoue;
     }
-    
+     public int getPassesJ1(){
+        return this.passesJ1;
+    }
+    public int getPassesJ2(){
+        return this.passesJ2;
+    }
+    public void setPassesJ1(int passes){
+        this.passesJ1=passes;
+    }
+    public void setPassesJ2(int passes){
+        this.passesJ2=passes;
+    }
+    public Goban getPlateau(){
+        return this.plateau;
+    }
 }
