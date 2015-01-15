@@ -152,13 +152,29 @@ public class GobanTest {
     @Test
     public void testNombreLibertes() {
         System.out.println("nombreLibertes");
-        Groupe g = null;
-        Goban instance = null;
-        int expResult = 0;
-        int result = instance.nombreLibertes(g);
+        Point2D p1=new Point2D(0,0);
+        Point2D p2=new Point2D(0,1);
+        Point2D p3=new Point2D(0,2);
+        Point2D p4=new Point2D(4,4);
+        Point2D p5=new Point2D(9,9);
+        Goban instance = new Goban(10,10);
+        instance.poserPierre(p1, true);
+        instance.poserPierre(p2, true);
+        instance.poserPierre(p3, true);
+        instance.poserPierre(p4, true);
+        instance.poserPierre(p5, true);
+        Groupe groupe1=instance.getListePierres()[0][0].getGroupe();
+        Groupe groupe2=instance.getListePierres()[4][4].getGroupe();
+        Groupe groupe3=instance.getListePierres()[9][9].getGroupe();
+        int expResult = 4;
+        int result = instance.nombreLibertes(groupe1);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        expResult = 4;
+        result = instance.nombreLibertes(groupe2);
+        assertEquals(expResult, result);
+        expResult = 2;
+        result = instance.nombreLibertes(groupe3);
+        assertEquals(expResult, result);
     }
 
     /**
